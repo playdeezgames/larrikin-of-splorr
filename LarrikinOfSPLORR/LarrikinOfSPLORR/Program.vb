@@ -1,10 +1,11 @@
 Module Program
-    Friend Const OkText = "Ok" 'both
-    Public Sub OkPrompt() 'both
+    Friend Const OkText = "Ok"
+    Public Sub OkPrompt()
         Dim prompt As New SelectionPrompt(Of String) With {.Title = ""}
         prompt.AddChoice(OkText)
         AnsiConsole.Prompt(prompt)
     End Sub
+
     Private Sub Welcome()
         AnsiConsole.Clear()
         Dim figlet = New FigletText("Larrikin").Centered()
