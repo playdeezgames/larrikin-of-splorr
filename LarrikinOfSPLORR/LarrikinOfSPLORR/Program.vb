@@ -19,11 +19,13 @@ Module Program
         AnsiConsole.MarkupLine("[gray]A Production of TheGrumpyGameDev[/]")
         AnsiConsole.MarkupLine("[gray]For Dungeon Crawler Jam 2022[/]")
         AnsiConsole.MarkupLine("[gray]...With ""help"" from his ""friends""[/]")
+        SfxPlayer.Play(Sfx.Title)
         OkPrompt()
     End Sub
 
     Sub Main(args As String())
         Console.Title = "Larrikin of SPLORR!!"
+        AddHandler SfxPlayer.PlaySfx, AddressOf SfxHandler.HandleSfx
         Welcome()
     End Sub
 End Module
