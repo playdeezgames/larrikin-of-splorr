@@ -1,8 +1,10 @@
 ﻿Module MainMenu
     Private Const QuitText = "Quit"
     Private Const AboutText = "About..."
+    Private Const EmbarkText = "Embark!"
     Private Function CreatePrompt() As SelectionPrompt(Of String)
         Dim prompt As New SelectionPrompt(Of String) With {.Title = "[olive]Main Menu:[/]"}
+        prompt.AddChoice(EmbarkText)
         prompt.AddChoice(AboutText)
         prompt.AddChoice(QuitText)
         Return prompt
@@ -12,6 +14,8 @@
         While Not done
             AnsiConsole.Clear()
             Select Case AnsiConsole.Prompt(CreatePrompt())
+                Case EmbarkText
+                    HandleEmbark()
                 Case AboutText
                     HandleAbout()
                 Case QuitText
@@ -20,6 +24,11 @@
                     Throw New NotImplementedException
             End Select
         End While
+    End Sub
+
+    Private Sub HandleEmbark()
+        Game.NewGame()
+        InPlayMenu.Run()
     End Sub
 
     Private Sub HandleAbout()
