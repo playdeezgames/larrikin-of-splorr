@@ -1,10 +1,4 @@
 Module Program
-    Friend Const OkText = "Ok"
-    Public Sub OkPrompt()
-        Dim prompt As New SelectionPrompt(Of String) With {.Title = ""}
-        prompt.AddChoice(OkText)
-        AnsiConsole.Prompt(prompt)
-    End Sub
 
     Private Sub Welcome()
         AnsiConsole.Clear()
@@ -28,5 +22,7 @@ Module Program
         Console.Title = "Larrikin of SPLORR!!"
         AddHandler SfxPlayer.PlaySfx, AddressOf SfxHandler.HandleSfx
         Welcome()
+        MainMenu.Run()
+        Game.Finish()
     End Sub
 End Module
