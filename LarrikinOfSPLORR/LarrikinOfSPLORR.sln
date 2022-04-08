@@ -1,0 +1,55 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.1.32228.430
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "LarrikinOfSPLORR", "LarrikinOfSPLORR\LarrikinOfSPLORR.vbproj", "{05F83E19-52D0-4C0E-89B9-4F233DD8B829}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Stuff", "Stuff", "{7D1ED191-909B-4892-A119-89BEF6E9A3DF}"
+	ProjectSection(SolutionItems) = preProject
+		..\butler.sh = ..\butler.sh
+		..\README.md = ..\README.md
+	EndProjectSection
+EndProject
+Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "SPLORR.Data", "SPLORR.Data\SPLORR.Data.vbproj", "{4EFD1655-A7B6-43E4-BE2C-5C7066804157}"
+EndProject
+Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "SPLORR.Game", "SPLORR.Game\SPLORR.Game.vbproj", "{A96D99C4-CDEB-460F-8915-F9FCE6C2B6D7}"
+EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "LOS.Data", "LOS.Data\LOS.Data.vbproj", "{63C8F1C9-A747-43FB-81C3-EC8AC7A73C72}"
+EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "LOS.Game", "LOS.Game\LOS.Game.vbproj", "{3602FB33-4D2F-4B38-85F2-CBD1C578B11B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{05F83E19-52D0-4C0E-89B9-4F233DD8B829}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{05F83E19-52D0-4C0E-89B9-4F233DD8B829}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{05F83E19-52D0-4C0E-89B9-4F233DD8B829}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{05F83E19-52D0-4C0E-89B9-4F233DD8B829}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4EFD1655-A7B6-43E4-BE2C-5C7066804157}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4EFD1655-A7B6-43E4-BE2C-5C7066804157}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4EFD1655-A7B6-43E4-BE2C-5C7066804157}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4EFD1655-A7B6-43E4-BE2C-5C7066804157}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A96D99C4-CDEB-460F-8915-F9FCE6C2B6D7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A96D99C4-CDEB-460F-8915-F9FCE6C2B6D7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A96D99C4-CDEB-460F-8915-F9FCE6C2B6D7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A96D99C4-CDEB-460F-8915-F9FCE6C2B6D7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{63C8F1C9-A747-43FB-81C3-EC8AC7A73C72}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{63C8F1C9-A747-43FB-81C3-EC8AC7A73C72}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{63C8F1C9-A747-43FB-81C3-EC8AC7A73C72}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{63C8F1C9-A747-43FB-81C3-EC8AC7A73C72}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3602FB33-4D2F-4B38-85F2-CBD1C578B11B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3602FB33-4D2F-4B38-85F2-CBD1C578B11B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3602FB33-4D2F-4B38-85F2-CBD1C578B11B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3602FB33-4D2F-4B38-85F2-CBD1C578B11B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {CB98342A-EB8E-4B60-8243-FE5A1173F993}
+	EndGlobalSection
+EndGlobal
