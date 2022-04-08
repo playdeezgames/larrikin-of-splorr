@@ -36,6 +36,7 @@
   <ItemGroup>
     <Import Include="LOS.Game" />
     <Import Include="Spectre.Console" />
+    <Import Include="SPLORR.Game" />
   </ItemGroup>
 
   <ItemGroup>
