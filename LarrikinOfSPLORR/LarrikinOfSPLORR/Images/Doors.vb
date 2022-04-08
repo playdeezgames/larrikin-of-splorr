@@ -89,4 +89,34 @@
             "          XX  ",
             "            XX"
         }
+    Friend ReadOnly AllDoors As New List(Of String) From {
+        "XX                                                    XX",
+        "  XX                                                XX  ",
+        "    XX                                            XX    ",
+        "      XX                                        XX      ",
+        "        XX                                    XX        ",
+        "          XX                                XX          ",
+        "            XX                            XX            ",
+        "              XXXXXXXXXXXXXXXXXXXXXXXXXXXX              ",
+        "    XXX       X                          X       XXX    ",
+        "    X  XX     X                          X     XX  X    ",
+        "    X    X    X                          X    X    X    ",
+        "    X    X    X       XXXXXXXXXXXX       X    X    X    ",
+        "    X    X    X       X          X       X    X    X    ",
+        "    X    X    X       X          X       X    X    X    ",
+        "    X    X    X       X          X       X    X    X    ",
+        "    X    X    X       X          X       X    X    X    ",
+        "    X    X    X       X          X       X    X    X    ",
+        "    X    X    X       X          X       X    X    X    ",
+        "    X    X    X       X          X       X    X    X    ",
+        "    X    X    X       X          X       X    X    X    ",
+        "    X    X    XXXXXXXXX          XXXXXXXXX    X    X    ",
+        "    X    X  XX                            XX  X    X    ",
+        "    X    XXX                                XXX    X    ",
+        "    X                                              X    ",
+        "    X                                              X    ",
+        "    X                                              X    ",
+        "  XX                                                XX  ",
+        "XX                                                    XX"
+        }
 End Module
