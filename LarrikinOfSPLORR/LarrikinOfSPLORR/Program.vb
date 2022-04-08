@@ -8,13 +8,13 @@ Module Program
     Private Sub Welcome()
         AnsiConsole.Clear()
         Dim figlet = New FigletText("Larrikin").Centered()
-        figlet.Color = Color.Green
+        figlet.Color = Color.Lime
         AnsiConsole.Write(figlet)
         figlet = New FigletText("of").Centered()
-        figlet.Color = Color.Green
+        figlet.Color = Color.Lime
         AnsiConsole.Write(figlet)
         figlet = New FigletText("SPLORR!!").Centered()
-        figlet.Color = Color.Green
+        figlet.Color = Color.Lime
         AnsiConsole.Write(figlet)
         AnsiConsole.MarkupLine("[gray]A Production of TheGrumpyGameDev[/]")
         AnsiConsole.MarkupLine("[gray]For Dungeon Crawler Jam 2022[/]")
