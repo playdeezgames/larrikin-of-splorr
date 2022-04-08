@@ -1,7 +1,9 @@
 ﻿Module MainMenu
     Private Const QuitText = "Quit"
+    Private Const AboutText = "About..."
     Private Function CreatePrompt() As SelectionPrompt(Of String)
         Dim prompt As New SelectionPrompt(Of String) With {.Title = "[olive]Main Menu:[/]"}
+        prompt.AddChoice(AboutText)
         prompt.AddChoice(QuitText)
         Return prompt
     End Function
@@ -10,12 +12,22 @@
         While Not done
             AnsiConsole.Clear()
             Select Case AnsiConsole.Prompt(CreatePrompt())
+                Case AboutText
+                    HandleAbout()
                 Case QuitText
                     done = HandleQuit()
                 Case Else
                     Throw New NotImplementedException
             End Select
         End While
+    End Sub
+
+    Private Sub HandleAbout()
+        AnsiConsole.Clear()
+        AnsiConsole.MarkupLine("About Larrikin of SPLORR!!:")
+        AnsiConsole.MarkupLine("Made by TheGrumpyGameDev for Dungeon Crawler Jam 2022")
+        AnsiConsole.MarkupLine("With graphics adapted from https://vurmux.itch.io/urizen-onebit-tilesets")
+        OkPrompt()
     End Sub
 
     Private Function HandleQuit() As Boolean
