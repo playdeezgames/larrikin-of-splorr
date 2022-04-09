@@ -14,10 +14,13 @@
             Return Direction.PreviousDirection()
         End Get
     End Property
-    Public ReadOnly Property Direction As Direction
+    Public Property Direction As Direction
         Get
             Return CType(PlayerData.ReadDirection().Value, Direction)
         End Get
+        Set(value As Direction)
+            PlayerData.WriteDirection(value)
+        End Set
     End Property
     Public ReadOnly Property RightDirection As Direction
         Get

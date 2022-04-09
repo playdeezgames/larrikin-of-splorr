@@ -19,6 +19,10 @@
             );")
     End Sub
 
+    Public Sub WriteDirection(direction As Long)
+        WriteColumnValue(AddressOf Initialize, TableName, PlayerIdColumn, 1, DirectionColumn, direction)
+    End Sub
+
     Public Function ReadDirection() As Long?
         Return ReadColumnValue(Of Long)(AddressOf Initialize, TableName, PlayerIdColumn, 1, DirectionColumn)
     End Function

@@ -8,10 +8,23 @@ Module ExplorationState
         DrawLocation(character)
         AnsiConsole.MarkupLine("Esc: Game Menu")
         Select Case Console.ReadKey(True).Key
+            Case ConsoleKey.LeftArrow
+                HandleTurnLeft(character)
+            Case ConsoleKey.RightArrow
+                HandleTurnRight(character)
             Case ConsoleKey.Escape
                 character.State = PlayerState.GameMenu
         End Select
     End Sub
+
+    Private Sub HandleTurnRight(character As PlayerCharacter)
+        character.Direction = character.Direction.NextDirection()
+    End Sub
+
+    Private Sub HandleTurnLeft(character As PlayerCharacter)
+        character.Direction = character.Direction.PreviousDirection()
+    End Sub
+
     Const LeftColumn = 0
     Const AheadColumn = 14
     Const RightColumn = 42
@@ -38,7 +51,7 @@ Module ExplorationState
         canvas.DrawImage(AheadColumn, 0, If(transition.State = TransitionState.Wall, AheadWall, AheadDoor), Color.White, Color.Black)
 
         Dim rightDirection = character.RightDirection
-        transition = location.GetTransition(aheadDirection)
+        transition = location.GetTransition(rightDirection)
         canvas.DrawImage(RightColumn, 0, If(transition.State = TransitionState.Wall, RightWall, RightDoor), Color.White, Color.Black)
         AnsiConsole.Clear()
         AnsiConsole.Write(canvas)
