@@ -6,7 +6,10 @@ Module ExplorationState
         AnsiConsole.Clear()
         Dim character As New PlayerCharacter
         DrawLocation(character)
-        AnsiConsole.MarkupLine("[aqua]Arrows[/]-move/turn [gray]|[/] [aqua]<Esc>[/]-Game Menu")
+        AnsiConsole.Markup("[aqua]<Esc>[/]-menu [gray]|[/] [aqua]Arrows[/]-move/turn")
+        If Not character.Location.Inventory.IsEmpty Then
+            AnsiConsole.Markup(" [gray]|[/] [aqua]G[/]-ground")
+        End If
         Select Case Console.ReadKey(True).Key
             Case ConsoleKey.LeftArrow
                 HandleTurnLeft(character)
