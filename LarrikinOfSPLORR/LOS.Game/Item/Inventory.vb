@@ -13,4 +13,8 @@
             Return InventoryItemData.ReadForInventory(Id).Select(Function(id) New Item(id)).ToList
         End Get
     End Property
+
+    Friend Sub Add(item As Item)
+        InventoryItemData.Write(Id, item.Id)
+    End Sub
 End Class

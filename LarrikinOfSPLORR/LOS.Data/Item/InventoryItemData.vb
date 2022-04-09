@@ -14,6 +14,24 @@
                 FOREIGN KEY ([{ItemIdColumn}]) REFERENCES [{ItemData.TableName}]([{ItemData.ItemIdColumn}])
             );")
     End Sub
+
+    Public Sub Write(inventoryId As Long, itemId As Long)
+        Initialize()
+        ExecuteNonQuery(
+            $"REPLACE INTO [{TableName}]
+            (
+                [{InventoryIdColumn}],
+                [{ItemIdColumn}]
+            ) 
+            VALUES
+            (
+                @{InventoryIdColumn},
+                @{ItemIdColumn}
+            );",
+            MakeParameter($"@{InventoryIdColumn}", inventoryId),
+            MakeParameter($"@{ItemIdColumn}", itemId))
+    End Sub
+
     Public Function ReadForInventory(inventoryId As Long) As List(Of Long)
         Initialize()
         Return ExecuteReader(

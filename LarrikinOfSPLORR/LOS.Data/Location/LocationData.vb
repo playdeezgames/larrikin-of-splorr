@@ -3,6 +3,12 @@
     Friend Const LocationIdColumn = "LocationId"
     Friend Const ColumnColumn = "Column"
     Friend Const RowColumn = "Row"
+    Public ReadOnly Property All As List(Of Long)
+        Get
+            Return ReadAllIds(AddressOf Initialize, TableName, LocationIdColumn)
+        End Get
+    End Property
+
     Friend Sub Initialize()
         ExecuteNonQuery(
             $"CREATE TABLE IF NOT EXISTS [{TableName}]

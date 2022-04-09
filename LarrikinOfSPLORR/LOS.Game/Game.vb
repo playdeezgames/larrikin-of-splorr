@@ -2,8 +2,21 @@
     Sub NewGame()
         Store.Reset()
         CreateMaze()
+        PopulateMaze()
         Dim characterId = CharacterData.Create(LocationData.ReadByColumnAndRow(0, 0).Value) 'TODO: place character with more care!
         PlayerData.DoStuff(characterId, PlayerState.Exploration, Direction.North)
+    End Sub
+
+    Private Sub PopulateMaze()
+        'spawning items
+        For Each itemType In AllItemTypes
+            Dim spawnCount = RNG.RollDice(itemType.SpawnDice)
+            While spawnCount > 0
+                Dim location = RNG.FromList(AllLocations)
+                location.Inventory.Add(New Item(ItemData.Create(itemType)))
+                spawnCount -= 1
+            End While
+        Next
     End Sub
 
     ReadOnly Property Walkers As New Dictionary(Of Direction, MazeDirection(Of Direction)) From {

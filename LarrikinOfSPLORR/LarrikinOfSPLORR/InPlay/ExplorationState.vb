@@ -74,7 +74,8 @@ Module ExplorationState
         RenderLocationSection(canvas, location, AheadColumn, character.Direction, AheadImages)
         RenderLocationSection(canvas, location, RightColumn, character.RightDirection, RightImages)
         If Not location.Inventory.IsEmpty Then
-            canvas.DrawImage(0, 0, Chest, Color.SandyBrown, Nothing)
+            canvas.DrawImage(22, 14, ChestBackground, Color.SandyBrown, Nothing)
+            canvas.DrawImage(22, 14, ChestForeground, Color.RosyBrown, Nothing)
         End If
         AnsiConsole.Clear()
         AnsiConsole.Write(canvas)
