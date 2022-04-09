@@ -5,9 +5,11 @@
             Dim character As New PlayerCharacter()
             Select Case character.State
                 Case PlayerState.Exploration
-                    ExplorationState.Run()
+                    ExplorationState.Run(character)
                 Case PlayerState.GameMenu
                     done = GameMenu.Run()
+                Case PlayerState.GroundInventory
+                    GroundInventoryMenu.Run(character)
                 Case Else
                     Throw New NotImplementedException
             End Select

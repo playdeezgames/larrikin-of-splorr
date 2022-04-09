@@ -2,9 +2,8 @@
 
 Module ExplorationState
     Const Solid = "X"c
-    Sub Run()
+    Sub Run(character As PlayerCharacter)
         AnsiConsole.Clear()
-        Dim character As New PlayerCharacter
         DrawLocation(character)
         AnsiConsole.Markup("[aqua]<Esc>[/]-menu [gray]|[/] [aqua]Arrows[/]-move/turn")
         If Not character.Location.Inventory.IsEmpty Then
@@ -17,9 +16,17 @@ Module ExplorationState
                 HandleTurnRight(character)
             Case ConsoleKey.UpArrow
                 HandleMoveAhead(character)
+            Case ConsoleKey.G
+                HandleGround(character)
             Case ConsoleKey.Escape
                 character.State = PlayerState.GameMenu
         End Select
+    End Sub
+
+    Private Sub HandleGround(character As PlayerCharacter)
+        If Not character.Location.Inventory.IsEmpty Then
+            character.State = PlayerState.GroundInventory
+        End If
     End Sub
 
     Private Sub HandleMoveAhead(character As PlayerCharacter)
