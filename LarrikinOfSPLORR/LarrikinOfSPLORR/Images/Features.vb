@@ -13,4 +13,7 @@
         " XXXXX XXXXX",
         " XXXXXXXXXXX"
         }
+    Friend ReadOnly FeatureImages As New Dictionary(Of FeatureType, List(Of String)) From {
+        {FeatureType.Chest, Chest}
+        }
 End Module

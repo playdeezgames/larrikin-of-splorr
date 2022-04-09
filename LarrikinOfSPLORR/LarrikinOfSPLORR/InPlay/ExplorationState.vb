@@ -50,20 +50,29 @@ Module ExplorationState
             Next
         Next
     End Sub
+    Private ReadOnly LeftImages As New Dictionary(Of TransitionState, List(Of String)) From {
+        {TransitionState.Wall, LeftWall},
+        {TransitionState.Open, LeftDoor}
+        }
+    Private ReadOnly AheadImages As New Dictionary(Of TransitionState, List(Of String)) From {
+        {TransitionState.Wall, AheadWall},
+        {TransitionState.Open, AheadDoor}
+        }
+    Private ReadOnly RightImages As New Dictionary(Of TransitionState, List(Of String)) From {
+        {TransitionState.Wall, RightWall},
+        {TransitionState.Open, RightDoor}
+        }
+
+    Private Sub RenderLocationSection(canvas As Canvas, location As Location, column As Integer, direction As Direction, images As Dictionary(Of TransitionState, List(Of String)))
+        Dim transition = location.GetTransition(direction)
+        canvas.DrawImage(column, 0, images(transition.State), Color.White, Color.Black)
+    End Sub
     Private Sub DrawLocation(character As PlayerCharacter)
         Dim canvas As New Canvas(ViewColumns, ViewRows)
         Dim location = character.Location
-        Dim leftDirection = character.LeftDirection
-        Dim transition = location.GetTransition(leftDirection)
-        canvas.DrawImage(LeftColumn, 0, If(transition.State = TransitionState.Wall, LeftWall, LeftDoor), Color.White, Color.Black)
-
-        Dim aheadDirection = character.Direction
-        transition = location.GetTransition(aheadDirection)
-        canvas.DrawImage(AheadColumn, 0, If(transition.State = TransitionState.Wall, AheadWall, AheadDoor), Color.White, Color.Black)
-
-        Dim rightDirection = character.RightDirection
-        transition = location.GetTransition(rightDirection)
-        canvas.DrawImage(RightColumn, 0, If(transition.State = TransitionState.Wall, RightWall, RightDoor), Color.White, Color.Black)
+        RenderLocationSection(canvas, location, LeftColumn, character.LeftDirection, LeftImages)
+        RenderLocationSection(canvas, location, AheadColumn, character.Direction, AheadImages)
+        RenderLocationSection(canvas, location, RightColumn, character.RightDirection, RightImages)
         AnsiConsole.Clear()
         AnsiConsole.Write(canvas)
     End Sub
