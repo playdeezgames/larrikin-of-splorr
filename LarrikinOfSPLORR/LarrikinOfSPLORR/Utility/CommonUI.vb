@@ -1,4 +1,8 @@
 ﻿Module CommonUI
+    Friend Const ViewColumns = 56
+    Friend Const ScreenColumns = ViewColumns * 2
+    Friend Const ViewRows = 28
+    Friend Const ScreenRows = ViewRows + 2
     Friend Const OkText = "Ok"
     Friend Sub OkPrompt()
         Dim prompt As New SelectionPrompt(Of String) With {.Title = ""}

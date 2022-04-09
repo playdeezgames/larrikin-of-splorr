@@ -12,8 +12,6 @@ Module ExplorationState
                 character.State = PlayerState.GameMenu
         End Select
     End Sub
-    Const ViewColumns = 56
-    Const ViewRows = 28
     Const LeftColumn = 0
     Const AheadColumn = 14
     Const RightColumn = 42

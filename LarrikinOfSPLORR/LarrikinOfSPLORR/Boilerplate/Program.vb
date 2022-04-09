@@ -17,10 +17,19 @@ Module Program
         SfxPlayer.Play(Sfx.Title)
         OkPrompt()
     End Sub
+    Private Sub Bootstrap()
+        Console.Title = "Larrikin of SPLORR!!"
+#Disable Warning CA1416 ' Validate platform compatibility
+        Console.WindowWidth = ScreenColumns
+        Console.WindowHeight = ScreenRows
+        Console.BufferWidth = ScreenColumns
+        Console.BufferHeight = ScreenRows
+#Enable Warning CA1416 ' Validate platform compatibility
+        AddHandler SfxPlayer.PlaySfx, AddressOf SfxHandler.HandleSfx
+    End Sub
 
     Sub Main(args As String())
-        Console.Title = "Larrikin of SPLORR!!"
-        AddHandler SfxPlayer.PlaySfx, AddressOf SfxHandler.HandleSfx
+        Bootstrap()
         Welcome()
         MainMenu.Run()
         Game.Finish()
