@@ -2,8 +2,8 @@
     Sub NewGame()
         Store.Reset()
         CreateMaze()
-        Dim characterId = CharacterData.Create()
-        PlayerData.DoStuff(characterId, PlayerState.Exploration)
+        Dim characterId = CharacterData.Create(LocationData.ReadByColumnAndRow(0, 0).Value) 'TODO: place character with more care!
+        PlayerData.DoStuff(characterId, PlayerState.Exploration, Direction.North)
     End Sub
 
     ReadOnly Property Walkers As New Dictionary(Of Direction, MazeDirection(Of Direction)) From {
