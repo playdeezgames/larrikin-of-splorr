@@ -9,7 +9,12 @@
     End Function
     ReadOnly Property Inventory As Inventory
         Get
-            Return New Inventory(LocationInventoryData.ReadForLocation(Id).Value)
+            Dim inventoryId = LocationInventoryData.ReadForLocation(Id)
+            If inventoryId Is Nothing Then
+                inventoryId = InventoryData.Create()
+                LocationInventoryData.Write(Id, inventoryId.Value)
+            End If
+            Return New Inventory(inventoryId.Value)
         End Get
     End Property
 End Class

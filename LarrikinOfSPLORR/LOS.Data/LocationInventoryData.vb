@@ -14,6 +14,24 @@
                 FOREIGN KEY ([{InventoryIdColumn}]) REFERENCES [{InventoryData.TableName}]([{InventoryData.InventoryIdColumn}])
             );")
     End Sub
+
+    Public Sub Write(locationId As Long, inventoryId As Long)
+        Initialize()
+        ExecuteNonQuery(
+            $"REPLACE INTO [{TableName}]
+            (
+                [{LocationIdColumn}],
+                [{InventoryIdColumn}]
+            ) 
+            VALUES
+            (
+                @{LocationIdColumn},
+                @{InventoryIdColumn}
+            );",
+            MakeParameter($"@{LocationIdColumn}", locationId),
+            MakeParameter($"@{InventoryIdColumn}", inventoryId))
+    End Sub
+
     Public Function ReadForLocation(locationId As Long) As Long?
         Return ReadColumnValue(Of Long)(AddressOf Initialize, TableName, LocationIdColumn, locationId, InventoryIdColumn)
     End Function
