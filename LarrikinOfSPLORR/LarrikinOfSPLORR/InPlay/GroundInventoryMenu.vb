@@ -12,6 +12,10 @@
                 character.State = PlayerState.Exploration
             Case Else
                 Dim item = character.Location.Inventory.Items.First(Function(x) x.Name = answer)
+                character.Inventory.Add(item)
+                If character.Location.Inventory.IsEmpty Then
+                    character.State = PlayerState.Exploration
+                End If
         End Select
     End Sub
 End Module
