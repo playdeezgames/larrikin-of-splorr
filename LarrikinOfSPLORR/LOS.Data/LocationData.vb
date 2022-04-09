@@ -1,3 +1,24 @@
 ﻿Public Module LocationData
-
+    Friend Const TableName = "Locations"
+    Friend Const LocationIdColumn = "LocationId"
+    Friend Const ColumnColumn = "Column"
+    Friend Const RowColumn = "Row"
+    Friend Sub Initialize()
+        ExecuteNonQuery(
+            $"CREATE TABLE IF NOT EXISTS [{TableName}]
+            (
+                [{LocationIdColumn}] INTEGER PRIMARY KEY AUTOINCREMENT,
+                [{ColumnColumn}] INT NOT NULL,
+                [{RowColumn}] INT NOT NULL,
+                UNIQUE([{ColumnColumn}],[{RowColumn}])
+            );")
+    End Sub
+    Public Function Create(column As Long, row As Long) As Long
+        Initialize()
+        ExecuteNonQuery(
+            $"INSERT INTO [{TableName}]([{ColumnColumn}],[{RowColumn}]) VALUES(@{ColumnColumn},@{RowColumn});",
+            MakeParameter($"@{ColumnColumn}", column),
+            MakeParameter($"@{RowColumn}", row))
+        Return LastInsertRowId
+    End Function
 End Module
