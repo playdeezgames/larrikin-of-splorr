@@ -12,6 +12,10 @@
             );")
     End Sub
 
+    Public Sub WriteLocation(characteId As Long, locationId As Long)
+        WriteColumnValue(AddressOf Initialize, TableName, CharacterIdColumn, characteId, LocationIdColumn, locationId)
+    End Sub
+
     Public Function ReadLocation(characterId As Long) As Long?
         Return ReadColumnValue(Of Long)(AddressOf Initialize, TableName, CharacterIdColumn, characterId, LocationIdColumn)
     End Function

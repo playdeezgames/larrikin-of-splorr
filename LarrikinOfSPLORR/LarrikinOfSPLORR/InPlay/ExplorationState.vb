@@ -6,15 +6,26 @@ Module ExplorationState
         AnsiConsole.Clear()
         Dim character As New PlayerCharacter
         DrawLocation(character)
-        AnsiConsole.MarkupLine("Esc: Game Menu")
+        AnsiConsole.MarkupLine("[aqua]Arrows[/]-move/turn [gray]|[/] [aqua]<Esc>[/]-Game Menu")
         Select Case Console.ReadKey(True).Key
             Case ConsoleKey.LeftArrow
                 HandleTurnLeft(character)
             Case ConsoleKey.RightArrow
                 HandleTurnRight(character)
+            Case ConsoleKey.UpArrow
+                HandleMoveAhead(character)
             Case ConsoleKey.Escape
                 character.State = PlayerState.GameMenu
         End Select
+    End Sub
+
+    Private Sub HandleMoveAhead(character As PlayerCharacter)
+        Dim transition = character.Location.GetTransition(character.Direction)
+        If transition.State = TransitionState.Open Then
+            character.Location = transition.ToLocation
+        Else
+            Play("L500;F#2")
+        End If
     End Sub
 
     Private Sub HandleTurnRight(character As PlayerCharacter)

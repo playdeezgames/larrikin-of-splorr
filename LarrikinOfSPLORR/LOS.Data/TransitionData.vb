@@ -19,6 +19,14 @@
             );")
     End Sub
 
+    Public Function ReadToLocation(fromLocationId As Long, direction As Long) As Long?
+        Initialize()
+        Return ExecuteScalar(Of Long)(
+            $"SELECT [{ToLocationIdColumn}] FROM [{TableName}] WHERE [{FromLocationIdColumn}]=@{FromLocationIdColumn} AND [{DirectionColumn}]=@{DirectionColumn};",
+            MakeParameter($"@{FromLocationIdColumn}", fromLocationId),
+            MakeParameter($"@{DirectionColumn}", direction))
+    End Function
+
     Public Sub WriteState(fromLocationId As Long, direction As Long, state As Long)
         Initialize()
         ExecuteNonQuery(
