@@ -8,12 +8,12 @@
             (
                 [{CharacterIdColumn}] INTEGER PRIMARY KEY AUTOINCREMENT,
                 [{LocationIdColumn}] INT NOT NULL,
-                FOREIGN KEY ([{LocationIdColumn}]) REFERENCE [{LocationData.TableName}]([{LocationData.LocationIdColumn}])
+                FOREIGN KEY ([{LocationIdColumn}]) REFERENCES [{LocationData.TableName}]([{LocationData.LocationIdColumn}])
             );")
     End Sub
 
     Public Function ReadLocation(characterId As Long) As Long?
-        Throw New NotImplementedException()
+        Return ReadColumnValue(Of Long)(AddressOf Initialize, TableName, CharacterIdColumn, characterId, LocationIdColumn)
     End Function
 
     Public Function Create(locationId As Long) As Long

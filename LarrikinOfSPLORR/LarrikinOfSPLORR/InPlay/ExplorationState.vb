@@ -28,9 +28,18 @@ Module ExplorationState
     End Sub
     Private Sub DrawLocation(character As PlayerCharacter)
         Dim canvas As New Canvas(ViewColumns, ViewRows)
-        canvas.DrawImage(LeftColumn, 0, If(RNG.RollDice("1d2") = 1, LeftWall, LeftDoor), Color.White, Color.Black)
-        canvas.DrawImage(AheadColumn, 0, If(RNG.RollDice("1d2") = 1, AheadWall, AheadDoor), Color.White, Color.Black)
-        canvas.DrawImage(RightColumn, 0, If(RNG.RollDice("1d2") = 1, RightWall, RightDoor), Color.White, Color.Black)
+        Dim location = character.Location
+        Dim leftDirection = character.LeftDirection
+        Dim transition = location.GetTransition(leftDirection)
+        canvas.DrawImage(LeftColumn, 0, If(transition.State = TransitionState.Wall, LeftWall, LeftDoor), Color.White, Color.Black)
+
+        Dim aheadDirection = character.Direction
+        transition = location.GetTransition(aheadDirection)
+        canvas.DrawImage(AheadColumn, 0, If(transition.State = TransitionState.Wall, AheadWall, AheadDoor), Color.White, Color.Black)
+
+        Dim rightDirection = character.RightDirection
+        transition = location.GetTransition(aheadDirection)
+        canvas.DrawImage(RightColumn, 0, If(transition.State = TransitionState.Wall, RightWall, RightDoor), Color.White, Color.Black)
         AnsiConsole.Clear()
         AnsiConsole.Write(canvas)
     End Sub

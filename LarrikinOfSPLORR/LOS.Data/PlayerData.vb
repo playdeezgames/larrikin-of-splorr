@@ -19,6 +19,10 @@
             );")
     End Sub
 
+    Public Function ReadDirection() As Long?
+        Return ReadColumnValue(Of Long)(AddressOf Initialize, TableName, PlayerIdColumn, 1, DirectionColumn)
+    End Function
+
     Function ReadState() As Long?
         Return ReadColumnValue(Of Long)(AddressOf Initialize, TableName, PlayerIdColumn, 1, StateColumn)
     End Function
