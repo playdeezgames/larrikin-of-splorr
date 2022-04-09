@@ -21,4 +21,12 @@
             MakeParameter($"@{RowColumn}", row))
         Return LastInsertRowId
     End Function
+
+    Public Function ReadByColumnAndRow(column As Long, row As Long) As Long?
+        Initialize()
+        Return ExecuteScalar(Of Long)(
+            $"SELECT [{LocationIdColumn}] FROM [{TableName}] WHERE [{ColumnColumn}]=@{ColumnColumn} AND [{RowColumn}]=@{RowColumn};",
+            MakeParameter($"@{ColumnColumn}", column),
+            MakeParameter($"@{RowColumn}", row))
+    End Function
 End Module

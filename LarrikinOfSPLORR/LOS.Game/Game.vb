@@ -12,13 +12,38 @@
         {Direction.South, New MazeDirection(Of Direction)(Direction.North, 0, 1)},
         {Direction.West, New MazeDirection(Of Direction)(Direction.East, -1, 0)}
         }
-
+    Private Sub CreateMazeLocations(maze As Maze(Of Direction))
+        For column = 0 To maze.Columns - 1
+            For row = 0 To maze.Rows - 1
+                LocationData.Create(column, row)
+            Next
+        Next
+    End Sub
     Private Sub CreateMaze()
         Dim maze As New Maze(Of Direction)(MazeColumns, MazeRows, Walkers)
         maze.Generate()
-        For column = 0 To maze.Columns
-            For row = 0 To maze.Rows
-                Dim locationId = LocationData.Create(column, row)
+        CreateMazeLocations(maze)
+        CreateMazeTransitions(maze)
+    End Sub
+
+    Private Sub CreateMazeTransitions(maze As Maze(Of Direction))
+        For column = 0 To maze.Columns - 1
+            For row = 0 To maze.Rows - 1
+                Dim fromLocationId = LocationData.ReadByColumnAndRow(column, row)
+                For Each direction In AllDirections
+                    Dim cell = maze.GetCell(column, row)
+                    Dim door = cell.GetDoor(direction)
+                    Dim toLocationId = LocationData.ReadByColumnAndRow(direction.NextColumn(column), direction.NextRow(row))
+                    If door IsNot Nothing AndAlso door.Open Then
+                        TransitionData.Write(fromLocationId.Value, toLocationId.Value, direction, TransitionState.Open)
+                    Else
+                        If toLocationId.HasValue Then
+                            TransitionData.Write(fromLocationId.Value, toLocationId.Value, direction, TransitionState.Wall)
+                        Else
+                            TransitionData.Write(fromLocationId.Value, fromLocationId.Value, direction, TransitionState.Wall)
+                        End If
+                    End If
+                Next
             Next
         Next
     End Sub
