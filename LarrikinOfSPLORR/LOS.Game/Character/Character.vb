@@ -22,4 +22,19 @@
 
         End Get
     End Property
+    ReadOnly Property CharacterType As CharacterType
+        Get
+            Return CType(CharacterData.ReadCharacterType(Id).Value, CharacterType)
+        End Get
+    End Property
+    ReadOnly Property MaximumHealth As Long
+        Get
+            Return CharacterType.MaximumHealth
+        End Get
+    End Property
+    ReadOnly Property Health As Long
+        Get
+            Return MaximumHealth - CharacterData.ReadWounds(Id).Value
+        End Get
+    End Property
 End Class
