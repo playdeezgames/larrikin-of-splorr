@@ -14,6 +14,9 @@ Module ExplorationState
         If Not character.Inventory.IsEmpty Then
             AnsiConsole.Markup(" [gray]|[/] [aqua]I[/]-inventory")
         End If
+        If character.Location.Enemies.Any Then
+            AnsiConsole.Markup(" [gray]|[/] [aqua]F[/]-fight")
+        End If
         Select Case Console.ReadKey(True).Key
             Case ConsoleKey.LeftArrow
                 HandleTurnLeft(character)
@@ -25,13 +28,21 @@ Module ExplorationState
                 HandleGround(character)
             Case ConsoleKey.I
                 HandleInventory(character)
+            Case ConsoleKey.F
+                HandleFight(character)
             Case ConsoleKey.Escape
                 character.State = PlayerState.GameMenu
         End Select
     End Sub
 
+    Private Sub HandleFight(character As PlayerCharacter)
+        If character.Location.Enemies.Any Then
+            character.State = PlayerState.Fight
+        End If
+    End Sub
+
     Private Sub HandleGround(character As PlayerCharacter)
-        If Not character.Location.Inventory.IsEmpty Then
+        If Not character.Location.Inventory.IsEmpty AndAlso Not character.Location.Enemies.Any Then
             character.State = PlayerState.GroundInventory
         End If
     End Sub

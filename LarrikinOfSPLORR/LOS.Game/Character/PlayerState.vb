@@ -3,4 +3,5 @@
     GameMenu
     GroundInventory
     Inventory
+    Fight
 End Enum

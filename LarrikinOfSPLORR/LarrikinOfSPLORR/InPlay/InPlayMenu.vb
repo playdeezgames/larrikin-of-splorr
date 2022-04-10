@@ -12,6 +12,8 @@
                     GroundInventoryMenu.Run(character)
                 Case PlayerState.Inventory
                     InventoryMenu.Run(character)
+                Case PlayerState.Fight
+                    FightMenu.Run(character)
                 Case Else
                     Throw New NotImplementedException
             End Select
