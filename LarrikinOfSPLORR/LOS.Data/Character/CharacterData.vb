@@ -16,6 +16,14 @@
             );")
     End Sub
 
+    Public Function ReadForLocation(locationId As Long) As List(Of Long)
+        Initialize()
+        Return ExecuteReader(Of Long)(
+            Function(reader) CLng(reader(CharacterIdColumn)),
+            $"SELECT [{CharacterIdColumn}] FROM [{TableName}] WHERE [{LocationIdColumn}]=@{LocationIdColumn};",
+            MakeParameter($"@{LocationIdColumn}", locationId))
+    End Function
+
     Public Sub WriteLocation(characteId As Long, locationId As Long)
         WriteColumnValue(AddressOf Initialize, TableName, CharacterIdColumn, characteId, LocationIdColumn, locationId)
     End Sub

@@ -5,7 +5,9 @@ Module ExplorationState
     Sub Run(character As PlayerCharacter)
         AnsiConsole.Clear()
         DrawLocation(character)
-        AnsiConsole.Markup($"[aqua]H:[/][red]{character.Health}/{character.MaximumHealth}[/] [gray]|[/] [aqua]<Esc>[/]-menu [gray]|[/] [aqua]Arrows[/]-move")
+        AnsiConsole.Markup($"[aqua]H:[/][red]{character.Health}/{character.MaximumHealth}[/]")
+        AnsiConsole.WriteLine()
+        AnsiConsole.Markup($"[aqua]<Esc>[/]-menu [gray]|[/] [aqua]Arrows[/]-move")
         If Not character.Location.Inventory.IsEmpty Then
             AnsiConsole.Markup(" [gray]|[/] [aqua]G[/]-ground")
         End If
@@ -94,11 +96,13 @@ Module ExplorationState
         RenderLocationSection(canvas, location, LeftColumn, character.LeftDirection, LeftImages)
         RenderLocationSection(canvas, location, AheadColumn, character.Direction, AheadImages)
         RenderLocationSection(canvas, location, RightColumn, character.RightDirection, RightImages)
-        If Not location.Inventory.IsEmpty Then
+        Dim enemies = location.Enemies
+        If enemies.any Then
+            canvas.DrawImage(16, 2, Goblin, Color.Green, Nothing)
+        ElseIf Not location.Inventory.IsEmpty Then
             canvas.DrawImage(22, 14, ChestBackground, Color.SandyBrown, Nothing)
             canvas.DrawImage(22, 14, ChestForeground, Color.RosyBrown, Nothing)
         End If
-        'canvas.DrawImage(16, 2, Goblin, Color.Green, Nothing)
         AnsiConsole.Clear()
         AnsiConsole.Write(canvas)
     End Sub

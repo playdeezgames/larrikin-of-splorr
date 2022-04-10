@@ -28,4 +28,8 @@ Module CharacterTypeExtensions
                 Return "0d1"
         End Select
     End Function
+    <Extension()>
+    Function IsEnemy(characterType As CharacterType) As Boolean
+        Return characterType <> CharacterType.Larrikin
+    End Function
 End Module

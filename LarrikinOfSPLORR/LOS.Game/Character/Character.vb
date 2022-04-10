@@ -11,6 +11,11 @@
             CharacterData.WriteLocation(Id, value.Id)
         End Set
     End Property
+    ReadOnly Property IsEnemy As Boolean
+        Get
+            Return CharacterType.IsEnemy
+        End Get
+    End Property
     ReadOnly Property Inventory As Inventory
         Get
             Dim inventoryId = CharacterInventoryData.ReadForCharacter(Id)
