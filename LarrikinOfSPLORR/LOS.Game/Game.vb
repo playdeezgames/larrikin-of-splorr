@@ -8,7 +8,22 @@
     End Sub
 
     Private Sub PopulateMaze()
-        'spawning items
+        PopulateItems()
+        PopulateEnemies()
+    End Sub
+
+    Private Sub PopulateEnemies()
+        For Each characterType In AllEnemyTypes
+            Dim spawnCount = RNG.RollDice(characterType.SpawnDice)
+            While spawnCount > 0
+                Dim location = RNG.FromList(AllLocations)
+                CharacterData.Create(location.Id, characterType)
+                spawnCount -= 1
+            End While
+        Next
+    End Sub
+
+    Private Sub PopulateItems()
         For Each itemType In AllItemTypes
             Dim spawnCount = RNG.RollDice(itemType.SpawnDice)
             While spawnCount > 0
