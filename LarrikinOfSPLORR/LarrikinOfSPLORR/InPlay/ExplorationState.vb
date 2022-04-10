@@ -98,6 +98,7 @@ Module ExplorationState
             canvas.DrawImage(22, 14, ChestBackground, Color.SandyBrown, Nothing)
             canvas.DrawImage(22, 14, ChestForeground, Color.RosyBrown, Nothing)
         End If
+        'canvas.DrawImage(16, 2, Goblin, Color.Green, Nothing)
         AnsiConsole.Clear()
         AnsiConsole.Write(canvas)
     End Sub

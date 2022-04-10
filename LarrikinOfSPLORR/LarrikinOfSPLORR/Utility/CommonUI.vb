@@ -10,4 +10,17 @@
         prompt.AddChoice(OkText)
         AnsiConsole.Prompt(prompt)
     End Sub
+    Friend Function DoubleImage(image As List(Of String)) As List(Of String)
+        Dim result As New List(Of String)
+        For Each line In image
+            Dim doubledLine = ""
+            For Each cell In line
+                doubledLine &= cell
+                doubledLine &= cell
+            Next
+            result.Add(doubledLine)
+            result.Add(doubledLine)
+        Next
+        Return result
+    End Function
 End Module
