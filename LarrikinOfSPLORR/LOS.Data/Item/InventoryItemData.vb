@@ -32,6 +32,11 @@
             MakeParameter($"@{ItemIdColumn}", itemId))
     End Sub
 
+    Friend Sub ClearForItem(itemId As Long)
+        Initialize()
+        ExecuteNonQuery($"DELETE FROM [{TableName}] WHERE [{ItemIdColumn}]=@{ItemIdColumn};", MakeParameter($"@{ItemIdColumn}", itemId))
+    End Sub
+
     Public Function ReadForInventory(inventoryId As Long) As List(Of Long)
         Initialize()
         Return ExecuteReader(

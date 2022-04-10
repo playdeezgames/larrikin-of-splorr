@@ -25,4 +25,22 @@ Public Module ItemTypeExtensions
                 Throw New NotImplementedException
         End Select
     End Function
+    <Extension()>
+    Function HealDice(itemType As ItemType) As String
+        Select Case itemType
+            Case ItemType.Potion
+                Return "2D3"
+            Case Else
+                Return "0D1"
+        End Select
+    End Function
+    <Extension()>
+    Function CanDrink(itemType As ItemType) As Boolean
+        Select Case itemType
+            Case ItemType.Potion
+                Return True
+            Case Else
+                Return False
+        End Select
+    End Function
 End Module

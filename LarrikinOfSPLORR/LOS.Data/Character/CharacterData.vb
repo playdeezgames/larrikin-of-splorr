@@ -32,6 +32,10 @@
         Return ReadColumnValue(Of Long)(AddressOf Initialize, TableName, CharacterIdColumn, characterId, woundsColumn)
     End Function
 
+    Public Sub WriteWounds(characterId As Long, wounds As Long)
+        WriteColumnValue(AddressOf Initialize, TableName, CharacterIdColumn, characterId, WoundsColumn, wounds)
+    End Sub
+
     Public Function Create(locationId As Long, characterType As Long) As Long
         Initialize()
         ExecuteNonQuery(

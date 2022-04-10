@@ -32,9 +32,17 @@
             Return CharacterType.MaximumHealth
         End Get
     End Property
-    ReadOnly Property Health As Long
+    Property Health As Long
         Get
             Return MaximumHealth - CharacterData.ReadWounds(Id).Value
         End Get
+        Set(value As Long)
+            If value > MaximumHealth Then
+                value = MaximumHealth
+            ElseIf value < 0 Then
+                value = 0
+            End If
+            CharacterData.WriteWounds(Id, MaximumHealth - value)
+        End Set
     End Property
 End Class

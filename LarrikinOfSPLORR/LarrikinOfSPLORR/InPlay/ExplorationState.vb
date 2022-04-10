@@ -5,7 +5,7 @@ Module ExplorationState
     Sub Run(character As PlayerCharacter)
         AnsiConsole.Clear()
         DrawLocation(character)
-        AnsiConsole.Markup($"[aqua]H:[/][red]{character.Health}[/] [gray]|[/] [aqua]<Esc>[/]-menu [gray]|[/] [aqua]Arrows[/]-move/turn")
+        AnsiConsole.Markup($"[aqua]H:[/][red]{character.Health}/{character.MaximumHealth}[/] [gray]|[/] [aqua]<Esc>[/]-menu [gray]|[/] [aqua]Arrows[/]-move")
         If Not character.Location.Inventory.IsEmpty Then
             AnsiConsole.Markup(" [gray]|[/] [aqua]G[/]-ground")
         End If

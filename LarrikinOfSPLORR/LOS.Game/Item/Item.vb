@@ -13,4 +13,18 @@
             Return ItemType.Name
         End Get
     End Property
+    ReadOnly Property CanDrink As Boolean
+        Get
+            Return ItemType.CanDrink
+        End Get
+    End Property
+    ReadOnly Property HealDice As String
+        Get
+            Return ItemType.HealDice
+        End Get
+    End Property
+
+    Public Sub Destroy()
+        ItemData.Clear(Id)
+    End Sub
 End Class
