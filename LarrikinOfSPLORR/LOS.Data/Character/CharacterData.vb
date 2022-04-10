@@ -2,12 +2,14 @@
     Friend Const TableName = "Characters"
     Friend Const CharacterIdColumn = "CharacterId"
     Friend Const LocationIdColumn = LocationData.LocationIdColumn
+    Friend Const CharacterTypeColumn = "CharacterType"
     Friend Sub Initialize()
         ExecuteNonQuery(
             $"CREATE TABLE IF NOT EXISTS [{TableName}]
             (
                 [{CharacterIdColumn}] INTEGER PRIMARY KEY AUTOINCREMENT,
                 [{LocationIdColumn}] INT NOT NULL,
+                [{CharacterTypeColumn}] INT NOT NULL,
                 FOREIGN KEY ([{LocationIdColumn}]) REFERENCES [{LocationData.TableName}]([{LocationData.LocationIdColumn}])
             );")
     End Sub
@@ -20,18 +22,21 @@
         Return ReadColumnValue(Of Long)(AddressOf Initialize, TableName, CharacterIdColumn, characterId, LocationIdColumn)
     End Function
 
-    Public Function Create(locationId As Long) As Long
+    Public Function Create(locationId As Long, characterType As Long) As Long
         Initialize()
         ExecuteNonQuery(
             $"INSERT INTO [{TableName}]
             (
-                [{LocationIdColumn}]
+                [{LocationIdColumn}],
+                [{CharacterTypeColumn}]
             ) 
             VALUES
             (
-                @{LocationIdColumn}
+                @{LocationIdColumn},
+                @{CharacterTypeColumn}
             );",
-            MakeParameter($"@{LocationIdColumn}", locationId))
+            MakeParameter($"@{LocationIdColumn}", locationId),
+            MakeParameter($"@{CharacterTypeColumn}", characterType))
         Return LastInsertRowId
     End Function
 End Module

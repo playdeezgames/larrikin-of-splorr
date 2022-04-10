@@ -3,7 +3,7 @@
         Store.Reset()
         CreateMaze()
         PopulateMaze()
-        Dim characterId = CharacterData.Create(LocationData.ReadByColumnAndRow(0, 0).Value) 'TODO: place character with more care!
+        Dim characterId = CharacterData.Create(LocationData.ReadByColumnAndRow(0, 0).Value, CharacterType.Larrikin) 'TODO: place character with more care!
         PlayerData.DoStuff(characterId, PlayerState.Exploration, Direction.North)
     End Sub
 
