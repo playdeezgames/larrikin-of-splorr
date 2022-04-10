@@ -97,8 +97,9 @@ Module ExplorationState
         RenderLocationSection(canvas, location, AheadColumn, character.Direction, AheadImages)
         RenderLocationSection(canvas, location, RightColumn, character.RightDirection, RightImages)
         Dim enemies = location.Enemies
-        If enemies.any Then
-            canvas.DrawImage(16, 2, Goblin, Color.Green, Nothing)
+        If enemies.Any Then
+            Dim enemy = enemies.First
+            canvas.DrawImage(16, 2, GetImageForCharacterType(enemy.CharacterType), GetColorForCharacterType(enemy.CharacterType), Nothing)
         ElseIf Not location.Inventory.IsEmpty Then
             canvas.DrawImage(22, 14, ChestBackground, Color.SandyBrown, Nothing)
             canvas.DrawImage(22, 14, ChestForeground, Color.RosyBrown, Nothing)
