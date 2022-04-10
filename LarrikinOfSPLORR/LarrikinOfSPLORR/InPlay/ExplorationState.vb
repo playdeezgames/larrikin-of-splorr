@@ -9,6 +9,9 @@ Module ExplorationState
         If Not character.Location.Inventory.IsEmpty Then
             AnsiConsole.Markup(" [gray]|[/] [aqua]G[/]-ground")
         End If
+        If Not character.Inventory.IsEmpty Then
+            AnsiConsole.Markup(" [gray]|[/] [aqua]I[/]-inventory")
+        End If
         Select Case Console.ReadKey(True).Key
             Case ConsoleKey.LeftArrow
                 HandleTurnLeft(character)
@@ -18,6 +21,8 @@ Module ExplorationState
                 HandleMoveAhead(character)
             Case ConsoleKey.G
                 HandleGround(character)
+            Case ConsoleKey.I
+                HandleInventory(character)
             Case ConsoleKey.Escape
                 character.State = PlayerState.GameMenu
         End Select
@@ -26,6 +31,12 @@ Module ExplorationState
     Private Sub HandleGround(character As PlayerCharacter)
         If Not character.Location.Inventory.IsEmpty Then
             character.State = PlayerState.GroundInventory
+        End If
+    End Sub
+
+    Private Sub HandleInventory(character As PlayerCharacter)
+        If Not character.Inventory.IsEmpty Then
+            character.State = PlayerState.Inventory
         End If
     End Sub
 

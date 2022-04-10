@@ -10,6 +10,8 @@
                     done = GameMenu.Run()
                 Case PlayerState.GroundInventory
                     GroundInventoryMenu.Run(character)
+                Case PlayerState.Inventory
+                    InventoryMenu.Run(character)
                 Case Else
                     Throw New NotImplementedException
             End Select

@@ -2,4 +2,5 @@
     Exploration
     GameMenu
     GroundInventory
+    Inventory
 End Enum
