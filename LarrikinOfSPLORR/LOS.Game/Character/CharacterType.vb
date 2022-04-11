@@ -12,9 +12,42 @@ Module CharacterTypeExtensions
     Function MaximumHealth(characterType As CharacterType) As Long
         Select Case characterType
             Case CharacterType.Larrikin
-                Return 20
-            Case CharacterType.Goblin
                 Return 5
+            Case CharacterType.Goblin
+                Return 1
+            Case Else
+                Throw New NotImplementedException
+        End Select
+    End Function
+    <Extension()>
+    Function Name(characterType As CharacterType) As String
+        Select Case characterType
+            Case CharacterType.Larrikin
+                Return "larrikin"
+            Case CharacterType.Goblin
+                Return "goblin"
+            Case Else
+                Throw New NotImplementedException
+        End Select
+    End Function
+    <Extension()>
+    Function AttackDice(characterType As CharacterType) As String
+        Select Case characterType
+            Case CharacterType.Larrikin
+                Return "1d3/3"
+            Case CharacterType.Goblin
+                Return "1d3/3"
+            Case Else
+                Throw New NotImplementedException
+        End Select
+    End Function
+    <Extension()>
+    Function DefendDice(characterType As CharacterType) As String
+        Select Case characterType
+            Case CharacterType.Larrikin
+                Return "1d3/3+1d3/3"
+            Case CharacterType.Goblin
+                Return "1d6/6"
             Case Else
                 Throw New NotImplementedException
         End Select

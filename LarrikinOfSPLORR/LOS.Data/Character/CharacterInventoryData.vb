@@ -35,4 +35,11 @@
     Public Function ReadForCharacter(locationId As Long) As Long?
         Return ReadColumnValue(Of Long)(AddressOf Initialize, TableName, CharacterIdColumn, locationId, InventoryIdColumn)
     End Function
+
+    Friend Sub Destroy(characterId As Long)
+        Initialize()
+        ExecuteNonQuery(
+            $"DELETE FROM [{TableName}] WHERE [{CharacterIdColumn}]=@{CharacterIdColumn};",
+            MakeParameter($"@{CharacterIdColumn}", characterId))
+    End Sub
 End Module

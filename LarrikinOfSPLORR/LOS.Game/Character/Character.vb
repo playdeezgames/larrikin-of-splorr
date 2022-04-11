@@ -16,6 +16,11 @@
             Return CharacterType.IsEnemy
         End Get
     End Property
+    ReadOnly Property Name As String
+        Get
+            Return CharacterType.Name
+        End Get
+    End Property
     ReadOnly Property Inventory As Inventory
         Get
             Dim inventoryId = CharacterInventoryData.ReadForCharacter(Id)
@@ -49,5 +54,28 @@
             End If
             CharacterData.WriteWounds(Id, MaximumHealth - value)
         End Set
+    End Property
+
+    Public Sub Destroy()
+        For Each item In Inventory.Items
+            Location.Inventory.Add(item)
+        Next
+        CharacterData.Destroy(Id)
+    End Sub
+
+    ReadOnly Property AttackDice As String
+        Get
+            Return CharacterType.AttackDice
+        End Get
+    End Property
+    ReadOnly Property DefendDice As String
+        Get
+            Return CharacterType.DefendDice
+        End Get
+    End Property
+    ReadOnly Property IsDead As Boolean
+        Get
+            Return Health = 0
+        End Get
     End Property
 End Class
