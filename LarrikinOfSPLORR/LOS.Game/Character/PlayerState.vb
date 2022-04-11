@@ -4,4 +4,6 @@
     GroundInventory
     Inventory
     Fight
+    Defend
+    Dead
 End Enum

@@ -14,6 +14,11 @@
                     InventoryMenu.Run(character)
                 Case PlayerState.Fight
                     FightMenu.Run(character)
+                Case PlayerState.Defend
+                    DefendState.Run(character)
+                Case PlayerState.Dead
+                    DeadState.Run(character)
+                    done = True
                 Case Else
                     Throw New NotImplementedException
             End Select

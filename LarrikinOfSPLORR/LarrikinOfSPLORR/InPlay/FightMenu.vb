@@ -32,7 +32,7 @@
         Else
             AnsiConsole.MarkupLine("You fail to run away!")
             Play("L500;F#2")
-            'TODO: counter attack
+            character.State = PlayerState.Defend
         End If
         OkPrompt()
     End Sub
@@ -58,6 +58,7 @@
             AnsiConsole.MarkupLine($"You miss!")
             Play("L500;B2")
         End If
+        character.State = PlayerState.Defend
         OkPrompt()
     End Sub
 End Module
