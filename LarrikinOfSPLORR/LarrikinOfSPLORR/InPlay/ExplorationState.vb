@@ -6,15 +6,19 @@ Module ExplorationState
         AnsiConsole.Clear()
         DrawLocation(character)
         AnsiConsole.Markup($"[aqua]H:[/][red]{character.Health}/{character.MaximumHealth}[/]")
+        Dim enemies = character.Location.Enemies
+        If enemies.Any Then
+            AnsiConsole.Markup($" [gray]|[/] [aqua]Enemies:[/]{enemies.Count}")
+        End If
         AnsiConsole.WriteLine()
         AnsiConsole.Markup($"[aqua]<Esc>[/]-menu [gray]|[/] [aqua]Arrows[/]-move")
-        If Not character.Location.Inventory.IsEmpty Then
+        If Not character.Location.Inventory.IsEmpty AndAlso Not enemies.Any Then
             AnsiConsole.Markup(" [gray]|[/] [aqua]G[/]-ground")
         End If
-        If Not character.Inventory.IsEmpty Then
+        If Not character.Inventory.IsEmpty AndAlso Not enemies.Any Then
             AnsiConsole.Markup(" [gray]|[/] [aqua]I[/]-inventory")
         End If
-        If character.Location.Enemies.Any Then
+        If enemies.Any Then
             AnsiConsole.Markup(" [gray]|[/] [aqua]F[/]-fight")
         End If
         Select Case Console.ReadKey(True).Key
@@ -48,7 +52,7 @@ Module ExplorationState
     End Sub
 
     Private Sub HandleInventory(character As PlayerCharacter)
-        If Not character.Inventory.IsEmpty Then
+        If Not character.Inventory.IsEmpty AndAlso Not character.Location.Enemies.Any Then
             character.State = PlayerState.Inventory
         End If
     End Sub
