@@ -36,6 +36,8 @@
         AnsiConsole.MarkupLine("About Larrikin of SPLORR!!:")
         AnsiConsole.MarkupLine("Made by TheGrumpyGameDev for Dungeon Crawler Jam 2022")
         AnsiConsole.MarkupLine("With graphics adapted from https://vurmux.itch.io/urizen-onebit-tilesets")
+        AnsiConsole.MarkupLine("Grim reaper adapted from https://game-icons.net/1x1/lorc/grim-reaper.html")
+
         OkPrompt()
     End Sub
 

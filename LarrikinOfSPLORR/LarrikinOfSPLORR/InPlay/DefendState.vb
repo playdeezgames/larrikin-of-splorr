@@ -20,7 +20,6 @@
                     character.Health -= damage
                     If character.IsDead Then
                         AnsiConsole.MarkupLine("Yer dead!")
-                        Play("L500;C4;L250;G3;G3;L500;G#3;G3;R500;B3;C4")
                     Else
                         Play("L500;G4")
                     End If
