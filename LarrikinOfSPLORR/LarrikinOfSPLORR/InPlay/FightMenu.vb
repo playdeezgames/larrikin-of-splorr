@@ -36,11 +36,11 @@
                 enemy.Destroy()
                 Play("L250;C4;C4;C4;L500;G4")
             Else
-                Play("L500;F#4")
+                Play("L500;B4")
             End If
         Else
             AnsiConsole.MarkupLine($"You miss!")
-            Play("L500;F#2")
+            Play("L500;B2")
         End If
         OkPrompt()
     End Sub
