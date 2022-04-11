@@ -11,7 +11,10 @@ Module ExplorationState
             AnsiConsole.Markup($" [gray]|[/] [aqua]Enemies:[/]{enemies.Count}")
         End If
         AnsiConsole.WriteLine()
-        AnsiConsole.Markup($"[aqua]<Esc>[/]-menu [gray]|[/] [aqua]Arrows[/]-move")
+        AnsiConsole.Markup($"[aqua]<Esc>[/]-menu")
+        If Not enemies.Any Then
+            AnsiConsole.Markup($" [gray]|[/] [aqua]Arrows[/]-move")
+        End If
         If Not character.Location.Inventory.IsEmpty AndAlso Not enemies.Any Then
             AnsiConsole.Markup(" [gray]|[/] [aqua]G[/]-ground")
         End If
@@ -58,17 +61,23 @@ Module ExplorationState
     End Sub
 
     Private Sub HandleMoveAhead(character As PlayerCharacter)
-        If Not character.Move() Then
-            Play("L500;F#2")
+        If Not character.Location.Enemies.Any Then
+            If Not character.Move() Then
+                Play("L500;F#2")
+            End If
         End If
     End Sub
 
     Private Sub HandleTurnRight(character As PlayerCharacter)
-        character.Direction = character.Direction.NextDirection()
+        If Not character.Location.Enemies.Any Then
+            character.Direction = character.Direction.NextDirection()
+        End If
     End Sub
 
     Private Sub HandleTurnLeft(character As PlayerCharacter)
-        character.Direction = character.Direction.PreviousDirection()
+        If Not character.Location.Enemies.Any Then
+            character.Direction = character.Direction.PreviousDirection()
+        End If
     End Sub
 
     Const LeftColumn = 0
