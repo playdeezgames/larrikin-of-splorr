@@ -7,7 +7,7 @@ Public Enum Direction
     West
 End Enum
 Public Module DirectionExtensions
-    Friend ReadOnly AllDirections As New List(Of Direction) From {
+    Public ReadOnly AllDirections As New List(Of Direction) From {
         Direction.North,
         Direction.East,
         Direction.South,

@@ -1,4 +1,5 @@
 ﻿Module FightMenu
+    Private Const RunText = "RUN!"
     Friend Sub Run(character As PlayerCharacter)
         AnsiConsole.Clear()
         Dim prompt As New SelectionPrompt(Of String) With {.Title = "[olive]Attack Target:[/]"}
@@ -8,17 +9,32 @@
             enemyTable(description) = enemy
             prompt.AddChoice(description)
         Next
-        prompt.AddChoice(NeverMindText) 'TODO: run away?
+        prompt.AddChoice(RunText) 'TODO: run away?
         Dim answer = AnsiConsole.Prompt(prompt)
         Select Case answer
-            Case NeverMindText
-                character.State = PlayerState.Exploration
+            Case RunText
+                HandleRun(character)
             Case Else
                 HandleAttack(character, enemyTable(answer))
                 If Not character.Location.Enemies.Any Then
                     character.State = PlayerState.Exploration
                 End If
         End Select
+    End Sub
+
+    Private Sub HandleRun(character As PlayerCharacter)
+        AnsiConsole.Clear()
+        character.Direction = RNG.FromList(AllDirections)
+        If character.Move() Then
+            AnsiConsole.MarkupLine("You manage to run away!")
+            character.State = PlayerState.Exploration
+            Play("L500;F#4")
+        Else
+            AnsiConsole.MarkupLine("You fail to run away!")
+            Play("L500;F#2")
+            'TODO: counter attack
+        End If
+        OkPrompt()
     End Sub
 
     Private Sub HandleAttack(character As PlayerCharacter, enemy As Character)

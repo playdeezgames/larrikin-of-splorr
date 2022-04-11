@@ -31,4 +31,13 @@
     Sub New()
         MyBase.New(PlayerData.ReadCharacter().Value)
     End Sub
+
+    Public Function Move() As Boolean
+        Dim transition = Location.GetTransition(Direction)
+        If transition.State = TransitionState.Open Then
+            Location = transition.ToLocation
+            Return True
+        End If
+        Return False
+    End Function
 End Class

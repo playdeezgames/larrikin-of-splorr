@@ -58,10 +58,7 @@ Module ExplorationState
     End Sub
 
     Private Sub HandleMoveAhead(character As PlayerCharacter)
-        Dim transition = character.Location.GetTransition(character.Direction)
-        If transition.State = TransitionState.Open Then
-            character.Location = transition.ToLocation
-        Else
+        If Not character.Move() Then
             Play("L500;F#2")
         End If
     End Sub
