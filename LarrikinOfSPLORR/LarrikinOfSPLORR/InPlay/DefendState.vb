@@ -1,14 +1,8 @@
 ﻿Module DefendState
     Friend Sub Run(character As PlayerCharacter)
-        AnsiConsole.Clear()
         Dim enemies = character.Location.Enemies
-        Dim firstEnemy As Boolean = True
         For Each enemy In enemies
-            If Not firstEnemy Then
-                AnsiConsole.MarkupLine("-----------------------------------")
-            Else
-                firstEnemy = False
-            End If
+            AnsiConsole.MarkupLine("-----------------------------------")
             If Not character.IsDead Then
                 Dim attack = RNG.RollDice(enemy.AttackDice)
                 AnsiConsole.MarkupLine($"{enemy.Name} rolls an attack of {attack}!")

@@ -22,7 +22,7 @@ Module ExplorationState
             AnsiConsole.Markup(" [gray]|[/] [aqua]I[/]-inventory")
         End If
         If enemies.Any Then
-            AnsiConsole.Markup(" [gray]|[/] [aqua]F[/]-fight")
+            AnsiConsole.Markup(" [gray]|[/] [aqua]F[/]-fight [gray]|[/] [aqua]R[/]-run")
         End If
         Select Case Console.ReadKey(True).Key
             Case ConsoleKey.LeftArrow
@@ -37,6 +37,8 @@ Module ExplorationState
                 HandleInventory(character)
             Case ConsoleKey.F
                 HandleFight(character)
+            Case ConsoleKey.R
+                HandleRun(character)
             Case ConsoleKey.Escape
                 character.State = PlayerState.GameMenu
         End Select

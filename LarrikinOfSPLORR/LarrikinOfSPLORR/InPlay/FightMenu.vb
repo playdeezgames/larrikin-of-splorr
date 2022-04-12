@@ -2,6 +2,7 @@
     Private Const RunText = "RUN!"
     Friend Sub Run(character As PlayerCharacter)
         AnsiConsole.Clear()
+        AnsiConsole.MarkupLine($"Yer Health:[red]{character.Health}/{character.MaximumHealth}[/]")
         Dim prompt As New SelectionPrompt(Of String) With {.Title = "[olive]Attack Target:[/]"}
         Dim enemyTable As New Dictionary(Of String, Character)
         For Each enemy In character.Location.Enemies
@@ -9,7 +10,7 @@
             enemyTable(description) = enemy
             prompt.AddChoice(description)
         Next
-        prompt.AddChoice(RunText) 'TODO: run away?
+        prompt.AddChoice(RunText)
         Dim answer = AnsiConsole.Prompt(prompt)
         Select Case answer
             Case RunText
@@ -22,19 +23,21 @@
         End Select
     End Sub
 
-    Private Sub HandleRun(character As PlayerCharacter)
-        AnsiConsole.Clear()
-        character.Direction = RNG.FromList(AllDirections)
-        If character.Move() Then
-            AnsiConsole.MarkupLine("You manage to run away!")
-            character.State = PlayerState.Exploration
-            Play("L500;F#4")
-        Else
-            AnsiConsole.MarkupLine("You fail to run away!")
-            Play("L500;F#2")
-            character.State = PlayerState.Defend
+    Friend Sub HandleRun(character As PlayerCharacter)
+        If character.Location.Enemies.Any Then
+            AnsiConsole.Clear()
+            character.Direction = RNG.FromList(AllDirections)
+            If character.Move() Then
+                AnsiConsole.MarkupLine("You manage to run away!")
+                character.State = PlayerState.Exploration
+                Play("L500;F#4")
+                OkPrompt()
+            Else
+                AnsiConsole.MarkupLine("You fail to run away!")
+                Play("L500;F#2")
+                character.State = PlayerState.Defend
+            End If
         End If
-        OkPrompt()
     End Sub
 
     Private Sub HandleAttack(character As PlayerCharacter, enemy As Character)
@@ -51,6 +54,7 @@
                 AnsiConsole.MarkupLine($"You kill {enemy.Name}!")
                 enemy.Destroy()
                 Play("L250;C4;C4;C4;L500;G4")
+                OkPrompt()
             Else
                 Play("L500;B4")
             End If
@@ -59,6 +63,5 @@
             Play("L500;B2")
         End If
         character.State = PlayerState.Defend
-        OkPrompt()
     End Sub
 End Module
