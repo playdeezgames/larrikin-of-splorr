@@ -6,6 +6,7 @@ Module ExplorationState
         AnsiConsole.Clear()
         DrawLocation(character)
         AnsiConsole.Markup($"[aqua]H:[/][red]{character.Health}/{character.MaximumHealth}[/]")
+        AnsiConsole.Markup($" [gray]|[/] [aqua]Facing:[/]{If(character.HasCompass, character.Direction.Name, "?")}")
         Dim enemies = character.Location.Enemies
         If enemies.Any Then
             AnsiConsole.Markup($" [gray]|[/] [aqua]Enemies:[/]{enemies.Count}")

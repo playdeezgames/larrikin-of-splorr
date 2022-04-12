@@ -2,10 +2,12 @@
 
 Public Enum ItemType
     Potion
+    Compass
 End Enum
 Public Module ItemTypeExtensions
     Public ReadOnly AllItemTypes As New List(Of ItemType) From {
-        ItemType.Potion
+        ItemType.Potion,
+        ItemType.Compass
         }
     <Extension()>
     Function DrinkSfx(itemType As ItemType) As Sfx?
@@ -21,6 +23,8 @@ Public Module ItemTypeExtensions
         Select Case itemType
             Case ItemType.Potion
                 Return "potion"
+            Case ItemType.Compass
+                Return "compass"
             Case Else
                 Throw New NotImplementedException
         End Select
@@ -29,7 +33,9 @@ Public Module ItemTypeExtensions
     Function SpawnDice(itemType As ItemType) As String
         Select Case itemType
             Case ItemType.Potion
-                Return "4D1"
+                Return "150D1"
+            Case ItemType.Compass
+                Return "1d1"
             Case Else
                 Throw New NotImplementedException
         End Select

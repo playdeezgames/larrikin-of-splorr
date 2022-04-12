@@ -56,7 +56,7 @@ Module CharacterTypeExtensions
     Function SpawnDice(characterType As CharacterType) As String
         Select Case characterType
             Case CharacterType.Goblin
-                Return "2d6"
+                Return "20d6"
             Case Else
                 Return "0d1"
         End Select

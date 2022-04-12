@@ -65,4 +65,19 @@ Public Module DirectionExtensions
                 Throw New NotImplementedException
         End Select
     End Function
+    <Extension()>
+    Function Name(direction As Direction) As String
+        Select Case direction
+            Case Direction.East
+                Return "E"
+            Case Direction.North
+                Return "N"
+            Case Direction.South
+                Return "S"
+            Case Direction.West
+                Return "W"
+            Case Else
+                Throw New NotImplementedException
+        End Select
+    End Function
 End Module

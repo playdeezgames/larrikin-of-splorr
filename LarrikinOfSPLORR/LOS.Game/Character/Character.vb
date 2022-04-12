@@ -83,4 +83,25 @@
             Return Inventory.Items.Any(Function(x) x.CanUse)
         End Get
     End Property
+
+    Public Sub Drink(item As Item)
+        Dim healing = RNG.RollDice(item.HealDice)
+        Health += healing
+        If item.DrinkSfx.HasValue Then
+            SfxPlayer.Play(item.DrinkSfx.Value)
+        End If
+        item.Destroy()
+    End Sub
+
+    Public Sub UseItem(item As Item)
+        If item.CanDrink Then
+            Drink(item)
+        End If
+    End Sub
+
+    ReadOnly Property HasCompass As Boolean
+        Get
+            Return Inventory.Items.Any(Function(x) x.ItemType = ItemType.Compass)
+        End Get
+    End Property
 End Class
