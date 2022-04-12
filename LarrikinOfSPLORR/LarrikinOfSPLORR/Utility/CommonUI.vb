@@ -5,6 +5,8 @@
     Friend Const ScreenRows = ViewRows + 2
     Friend Const OkText = "Ok"
     Friend Const NeverMindText = "Never Mind"
+    Friend Const MapColumns = MazeColumns * 2 + 1
+    Friend Const MapRows = MazeRows * 2 + 1
     Friend Sub OkPrompt()
         Dim prompt As New SelectionPrompt(Of String) With {.Title = ""}
         prompt.AddChoice(OkText)

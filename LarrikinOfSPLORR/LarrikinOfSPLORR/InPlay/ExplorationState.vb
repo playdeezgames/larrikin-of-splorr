@@ -24,6 +24,8 @@ Module ExplorationState
         End If
         If enemies.Any Then
             AnsiConsole.Markup(" [gray]|[/] [aqua]F[/]-fight [gray]|[/] [aqua]R[/]-run")
+        Else
+            AnsiConsole.Markup(" [gray]|[/] [aqua]M[/]-map")
         End If
         Select Case Console.ReadKey(True).Key
             Case ConsoleKey.LeftArrow
@@ -40,9 +42,17 @@ Module ExplorationState
                 HandleFight(character)
             Case ConsoleKey.R
                 HandleRun(character)
+            Case ConsoleKey.M
+                HandleMap(character)
             Case ConsoleKey.Escape
                 character.State = PlayerState.GameMenu
         End Select
+    End Sub
+
+    Private Sub HandleMap(character As PlayerCharacter)
+        If Not character.Location.Enemies.Any Then
+            character.State = PlayerState.Map
+        End If
     End Sub
 
     Private Sub HandleFight(character As PlayerCharacter)

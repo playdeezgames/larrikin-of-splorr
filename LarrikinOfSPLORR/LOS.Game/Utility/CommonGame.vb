@@ -1,4 +1,4 @@
-﻿Module CommonGame
-    Friend Const MazeColumns = 27
-    Friend Const MazeRows = 14
+﻿Public Module CommonGame
+    Public Const MazeColumns = 14
+    Public Const MazeRows = 14
 End Module

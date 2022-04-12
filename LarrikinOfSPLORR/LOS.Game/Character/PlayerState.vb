@@ -6,4 +6,5 @@
     Fight
     Defend
     Dead
+    Map
 End Enum

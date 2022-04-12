@@ -19,6 +19,15 @@
                 UNIQUE([{ColumnColumn}],[{RowColumn}])
             );")
     End Sub
+
+    Public Function ReadColumn(locationId As Long) As Long?
+        Return ReadColumnValue(Of Long)(AddressOf Initialize, TableName, LocationIdColumn, locationId, ColumnColumn)
+    End Function
+
+    Public Function ReadRow(locationId As Long) As Long?
+        Return ReadColumnValue(Of Long)(AddressOf Initialize, TableName, LocationIdColumn, locationId, RowColumn)
+    End Function
+
     Public Function Create(column As Long, row As Long) As Long
         Initialize()
         ExecuteNonQuery(

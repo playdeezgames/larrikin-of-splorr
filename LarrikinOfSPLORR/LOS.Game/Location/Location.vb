@@ -20,6 +20,17 @@
         End Get
     End Property
 
+    ReadOnly Property Column As Long
+        Get
+            Return LocationData.ReadColumn(Id).Value
+        End Get
+    End Property
+    ReadOnly Property Row As Long
+        Get
+            Return LocationData.ReadRow(Id).Value
+        End Get
+    End Property
+
     ReadOnly Property Inventory As Inventory
         Get
             Dim inventoryId = LocationInventoryData.ReadForLocation(Id)
@@ -32,7 +43,7 @@
     End Property
 End Class
 Public Module LocationExtensions
-    Friend ReadOnly Property AllLocations As List(Of Location)
+    Public ReadOnly Property AllLocations As List(Of Location)
         Get
             Return LocationData.All.Select(Function(id) New Location(id)).ToList
         End Get

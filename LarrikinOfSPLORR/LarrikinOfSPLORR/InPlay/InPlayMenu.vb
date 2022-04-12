@@ -19,6 +19,8 @@
                 Case PlayerState.Dead
                     DeadState.Run(character)
                     done = True
+                Case PlayerState.Map
+                    MapState.Run(character)
                 Case Else
                     Throw New NotImplementedException
             End Select
