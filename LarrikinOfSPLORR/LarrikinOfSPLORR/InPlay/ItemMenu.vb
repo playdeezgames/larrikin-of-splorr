@@ -23,9 +23,7 @@
     End Sub
 
     Private Sub HandleDrink(character As PlayerCharacter, item As Item)
-        Dim healing = RNG.RollDice(item.HealDice)
-        character.Health += healing
+        character.Drink(item)
         Play("L250;D4;F#4;A4;L500;D5;L250;A4;L1000;D5")
-        item.Destroy()
     End Sub
 End Module

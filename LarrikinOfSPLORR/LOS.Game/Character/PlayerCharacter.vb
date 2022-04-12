@@ -28,6 +28,12 @@
         End Get
     End Property
 
+    Public Sub UseItem(item As Item)
+        If item.CanDrink Then
+            Drink(item)
+        End If
+    End Sub
+
     Sub New()
         MyBase.New(PlayerData.ReadCharacter().Value)
     End Sub
@@ -40,4 +46,10 @@
         End If
         Return False
     End Function
+
+    Public Sub Drink(item As Item)
+        Dim healing = RNG.RollDice(item.HealDice)
+        Health += healing
+        item.Destroy()
+    End Sub
 End Class

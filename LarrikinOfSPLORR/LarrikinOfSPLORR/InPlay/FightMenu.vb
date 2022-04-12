@@ -1,5 +1,6 @@
 ﻿Module FightMenu
     Private Const RunText = "RUN!"
+    Private Const UseItemText = "Use Item..."
     Friend Sub Run(character As PlayerCharacter)
         AnsiConsole.Clear()
         AnsiConsole.MarkupLine($"Yer Health:[red]{character.Health}/{character.MaximumHealth}[/]")
@@ -10,11 +11,16 @@
             enemyTable(description) = enemy
             prompt.AddChoice(description)
         Next
+        If character.CanUseItem Then
+            prompt.AddChoice(UseItemText)
+        End If
         prompt.AddChoice(RunText)
         Dim answer = AnsiConsole.Prompt(prompt)
         Select Case answer
             Case RunText
                 HandleRun(character)
+            Case UseItemText
+                UseItemMenu.Run(character)
             Case Else
                 HandleAttack(character, enemyTable(answer))
                 If Not character.Location.Enemies.Any Then

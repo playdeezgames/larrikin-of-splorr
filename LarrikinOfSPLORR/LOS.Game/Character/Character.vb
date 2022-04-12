@@ -78,4 +78,9 @@
             Return Health = 0
         End Get
     End Property
+    ReadOnly Property CanUseItem As Boolean
+        Get
+            Return Inventory.Items.Any(Function(x) x.CanUse)
+        End Get
+    End Property
 End Class

@@ -18,6 +18,11 @@
             Return ItemType.CanDrink
         End Get
     End Property
+    ReadOnly Property CanUse As Boolean
+        Get
+            Return CanDrink
+        End Get
+    End Property
     ReadOnly Property HealDice As String
         Get
             Return ItemType.HealDice
