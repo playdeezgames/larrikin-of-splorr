@@ -65,7 +65,7 @@ Module ExplorationState
     Private Sub HandleMoveAhead(character As PlayerCharacter)
         If Not character.Location.Enemies.Any Then
             If Not character.Move() Then
-                Play("L500;F#2")
+                SfxPlayer.Play(Sfx.BumpWall)
             End If
         End If
     End Sub

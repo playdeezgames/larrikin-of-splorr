@@ -50,6 +50,9 @@
     Public Sub Drink(item As Item)
         Dim healing = RNG.RollDice(item.HealDice)
         Health += healing
+        If item.DrinkSfx.HasValue Then
+            SfxPlayer.Play(item.DrinkSfx.Value)
+        End If
         item.Destroy()
     End Sub
 End Class

@@ -26,7 +26,7 @@
                    !@@@@@@@@@@@@@@@@@@:   Y@J           
                    &@@@@@@@@@@@@@@@@@@B    .            
                   ^&&&&&&&&&&&&&&&&&&&&.                ")
-        Play("L500;C4;L250;G3;G3;L500;G#3;G3;R500;B3;C4")
+        SfxPlayer.Play(Sfx.Death)
         AnsiConsole.MarkupLine("[red]Yer dead.[/]")
         OkPrompt()
     End Sub

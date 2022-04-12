@@ -36,11 +36,11 @@
             If character.Move() Then
                 AnsiConsole.MarkupLine("You manage to run away!")
                 character.State = PlayerState.Exploration
-                Play("L500;F#4")
+                SfxPlayer.Play(Sfx.RunAway)
                 OkPrompt()
             Else
                 AnsiConsole.MarkupLine("You fail to run away!")
-                Play("L500;F#2")
+                SfxPlayer.Play(Sfx.BumpWall)
                 character.State = PlayerState.Defend
             End If
         End If
@@ -59,14 +59,14 @@
             If enemy.IsDead Then
                 AnsiConsole.MarkupLine($"You kill {enemy.Name}!")
                 enemy.Destroy()
-                Play("L250;C4;C4;C4;L500;G4")
+                SfxPlayer.Play(Sfx.KillEnemy)
                 OkPrompt()
             Else
-                Play("L500;B4")
+                SfxPlayer.Play(Sfx.PlayerHit)
             End If
         Else
             AnsiConsole.MarkupLine($"You miss!")
-            Play("L500;B2")
+            SfxPlayer.Play(Sfx.PlayerMiss)
         End If
         character.State = PlayerState.Defend
     End Sub

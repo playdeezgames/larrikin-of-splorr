@@ -8,6 +8,15 @@ Public Module ItemTypeExtensions
         ItemType.Potion
         }
     <Extension()>
+    Function DrinkSfx(itemType As ItemType) As Sfx?
+        Select Case itemType
+            Case ItemType.Potion
+                Return Sfx.HealthUp
+            Case Else
+                Return Nothing
+        End Select
+    End Function
+    <Extension()>
     Function Name(itemType As ItemType) As String
         Select Case itemType
             Case ItemType.Potion

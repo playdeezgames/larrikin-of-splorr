@@ -15,11 +15,11 @@
                     If character.IsDead Then
                         AnsiConsole.MarkupLine("Yer dead!")
                     Else
-                        Play("L500;G4")
+                        SfxPlayer.Play(Sfx.EnemyHit)
                     End If
                 Else
                     AnsiConsole.MarkupLine($"{enemy.Name} misses!")
-                    Play("L500;G2")
+                    SfxPlayer.Play(Sfx.EnemyMiss)
                 End If
             End If
         Next

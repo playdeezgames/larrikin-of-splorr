@@ -3,6 +3,11 @@
     Sub New(itemId As Long)
         Id = itemId
     End Sub
+    ReadOnly Property DrinkSfx As Sfx?
+        Get
+            Return ItemType.DrinkSfx
+        End Get
+    End Property
     ReadOnly Property ItemType As ItemType
         Get
             Return CType(ItemData.ReadItemType(Id).Value, ItemType)
