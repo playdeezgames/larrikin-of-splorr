@@ -33,6 +33,12 @@ Public Module ItemTypeExtensions
         Select Case itemType
             Case ItemType.Shield
                 Return 10
+            Case ItemType.Dagger
+                Return 10
+            Case ItemType.ShortSword
+                Return 20
+            Case ItemType.LongSword
+                Return 30
             Case Else
                 Return 0
         End Select
@@ -95,6 +101,41 @@ Public Module ItemTypeExtensions
                 Return "1D3/3"
             Case Else
                 Return "0D1"
+        End Select
+    End Function
+    <Extension()>
+    Function AttackDice(itemType As ItemType) As String
+        Select Case itemType
+            Case ItemType.Dagger
+                Return "1D2/2"
+            Case ItemType.ShortSword
+                Return "1D2/2+1D2/2"
+            Case ItemType.LongSword
+                Return "1D2/2+1D2/2+1D2/2"
+            Case Else
+                Return "0D1"
+        End Select
+    End Function
+    <Extension()>
+    Function MaximumDamage(itemType As ItemType) As Integer
+        Select Case itemType
+            Case ItemType.Dagger
+                Return 1
+            Case ItemType.ShortSword
+                Return 2
+            Case ItemType.LongSword
+                Return 3
+            Case Else
+                Return 0
+        End Select
+    End Function
+    <Extension()>
+    Function IsWeapon(itemType As ItemType) As Boolean
+        Select Case itemType
+            Case ItemType.Dagger, ItemType.ShortSword, ItemType.LongSword
+                Return True
+            Case Else
+                Return False
         End Select
     End Function
     <Extension()>

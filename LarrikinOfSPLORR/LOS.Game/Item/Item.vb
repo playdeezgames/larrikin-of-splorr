@@ -53,6 +53,22 @@
             Return ItemType.DefendDice
         End Get
     End Property
+    ReadOnly Property IsWeapon As Boolean
+        Get
+            Return ItemType.IsWeapon
+        End Get
+    End Property
+    ReadOnly Property MaximumDamage As Integer
+        Get
+            Return ItemType.MaximumDamage
+        End Get
+    End Property
+
+    ReadOnly Property AttackDice As String
+        Get
+            Return ItemType.AttackDice
+        End Get
+    End Property
 
     Public Sub Destroy()
         ItemData.Clear(Id)

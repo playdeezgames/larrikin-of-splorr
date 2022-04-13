@@ -63,9 +63,20 @@
         CharacterData.Destroy(Id)
     End Sub
 
+    ReadOnly Property Weapon As Item
+        Get
+            Return Inventory.Items.Where(Function(x) x.IsWeapon).OrderByDescending(Function(x) x.MaximumDamage).FirstOrDefault
+        End Get
+    End Property
+
     ReadOnly Property AttackDice As String
         Get
-            Return CharacterType.AttackDice
+            Dim result = CharacterType.AttackDice
+            Dim weaponItem = Weapon
+            If weaponItem IsNot Nothing Then
+                result &= $"+{weaponItem.AttackDice}"
+            End If
+            Return result
         End Get
     End Property
     ReadOnly Property Shield As Item

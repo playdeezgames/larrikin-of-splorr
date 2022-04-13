@@ -50,6 +50,11 @@
         AnsiConsole.Clear()
         Dim attackRoll = RNG.RollDice(character.AttackDice)
         AnsiConsole.MarkupLine($"You roll an attack of {attackRoll}!")
+        Dim weapon = character.Weapon
+        If weapon IsNot Nothing AndAlso weapon.DecreaseDurability(attackRoll) Then
+            AnsiConsole.MarkupLine($"[red]You broke yer {weapon.Name}![/]")
+            weapon.Destroy()
+        End If
         Dim defendRoll = RNG.RollDice(enemy.DefendDice)
         AnsiConsole.MarkupLine($"{enemy.Name} rolls a defense of {defendRoll}!")
         If attackRoll > defendRoll Then
