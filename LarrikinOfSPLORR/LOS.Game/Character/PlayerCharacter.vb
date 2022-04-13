@@ -48,4 +48,9 @@
     Sub MarkMap()
         PlayerLocationData.Write(Location.Id)
     End Sub
+    ReadOnly Property HasWon As Boolean
+        Get
+            Return Inventory.Items.Any(Function(x) x.ItemType = ItemType.Macguffin)
+        End Get
+    End Property
 End Class

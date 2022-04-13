@@ -9,4 +9,5 @@
     Death
     RunAway
     KillEnemy
+    Win
 End Enum

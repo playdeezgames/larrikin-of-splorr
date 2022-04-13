@@ -21,9 +21,15 @@
                 PlayRunAway()
             Case Sfx.KillEnemy
                 PlayKillEnemy()
+            Case Sfx.Win
+                PlayWin()
             Case Else
                 Throw New NotImplementedException
         End Select
+    End Sub
+
+    Private Sub PlayWin()
+        Play("L250;A4;A4;A4;A4;L500;F#4;L250;A4;B4;A4;G#4;L500;A4;F#4")
     End Sub
 
     Private Sub PlayKillEnemy()
