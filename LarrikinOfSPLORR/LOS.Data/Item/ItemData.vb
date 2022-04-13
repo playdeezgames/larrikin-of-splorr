@@ -27,6 +27,7 @@
     Public Sub Clear(itemId As Long)
         Initialize()
         InventoryItemData.ClearForItem(itemId)
+        ItemDurabilityData.Clear(itemId)
         ExecuteNonQuery($"DELETE FROM [{TableName}] WHERE [{ItemIdColumn}]=@{ItemIdColumn};", MakeParameter($"@{ItemIdColumn}", itemId))
     End Sub
 End Module

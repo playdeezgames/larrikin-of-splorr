@@ -29,6 +29,15 @@ Public Module ItemTypeExtensions
         End Select
     End Function
     <Extension()>
+    Function Durability(itemType As ItemType) As Long
+        Select Case itemType
+            Case ItemType.Shield
+                Return 10
+            Case Else
+                Return 0
+        End Select
+    End Function
+    <Extension()>
     Function Name(itemType As ItemType) As String
         Select Case itemType
             Case ItemType.Potion
@@ -75,6 +84,15 @@ Public Module ItemTypeExtensions
         Select Case itemType
             Case ItemType.Potion
                 Return "2D3"
+            Case Else
+                Return "0D1"
+        End Select
+    End Function
+    <Extension()>
+    Function DefendDice(itemType As ItemType) As String
+        Select Case itemType
+            Case ItemType.Shield
+                Return "1D3/3"
             Case Else
                 Return "0D1"
         End Select

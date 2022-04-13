@@ -28,9 +28,29 @@
             Return CanDrink
         End Get
     End Property
+
+    Public Function DecreaseDurability(durability As Integer) As Boolean
+        Dim current = ItemDurabilityData.Read(Id)
+        If Not current.hasvalue Then
+            current = durability
+        Else
+            current = current.value + durability
+        End If
+        ItemDurabilityData.Write(Id, current.Value)
+        If current.Value >= ItemType.Durability Then
+            Return True
+        End If
+        Return False
+    End Function
+
     ReadOnly Property HealDice As String
         Get
             Return ItemType.HealDice
+        End Get
+    End Property
+    ReadOnly Property DefendDice As String
+        Get
+            Return ItemType.DefendDice
         End Get
     End Property
 

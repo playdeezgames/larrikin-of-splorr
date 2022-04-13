@@ -68,9 +68,19 @@
             Return CharacterType.AttackDice
         End Get
     End Property
+    ReadOnly Property Shield As Item
+        Get
+            Return Inventory.Items.FirstOrDefault(Function(x) x.ItemType = ItemType.Shield)
+        End Get
+    End Property
     ReadOnly Property DefendDice As String
         Get
-            Return CharacterType.DefendDice
+            Dim result = CharacterType.DefendDice
+            Dim shieldItem = Shield
+            If shieldItem IsNot Nothing Then
+                result &= $"+{shieldItem.DefendDice}"
+            End If
+            Return result
         End Get
     End Property
     ReadOnly Property IsDead As Boolean
