@@ -4,12 +4,20 @@ Public Enum ItemType
     Potion
     Compass
     Macguffin
+    Dagger
+    ShortSword
+    LongSword
+    Shield
 End Enum
 Public Module ItemTypeExtensions
     Public ReadOnly AllItemTypes As New List(Of ItemType) From {
         ItemType.Potion,
         ItemType.Compass,
-        ItemType.Macguffin
+        ItemType.Macguffin,
+        ItemType.Dagger,
+        ItemType.Shield,
+        ItemType.ShortSword,
+        ItemType.LongSword
         }
     <Extension()>
     Function DrinkSfx(itemType As ItemType) As Sfx?
@@ -29,6 +37,14 @@ Public Module ItemTypeExtensions
                 Return "compass"
             Case ItemType.Macguffin
                 Return "macguffin"
+            Case ItemType.Dagger
+                Return "dagger"
+            Case ItemType.ShortSword
+                Return "shortsword"
+            Case ItemType.LongSword
+                Return "longsword"
+            Case ItemType.Shield
+                Return "shield"
             Case Else
                 Throw New NotImplementedException
         End Select
@@ -42,6 +58,14 @@ Public Module ItemTypeExtensions
                 Return "1d1"
             Case ItemType.Macguffin
                 Return "1d1"
+            Case ItemType.Dagger
+                Return "3d4"
+            Case ItemType.ShortSword
+                Return "2d4"
+            Case ItemType.LongSword
+                Return "1d4"
+            Case ItemType.Shield
+                Return "2d4"
             Case Else
                 Throw New NotImplementedException
         End Select
