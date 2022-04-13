@@ -22,6 +22,11 @@
             PlayerData.WriteDirection(value)
         End Set
     End Property
+
+    Public Function HasBeenTo(location As Location) As Boolean
+        Return PlayerLocationData.Read(location.Id)
+    End Function
+
     Public ReadOnly Property RightDirection As Direction
         Get
             Return Direction.NextDirection()
@@ -35,8 +40,12 @@
         Dim transition = Location.GetTransition(Direction)
         If transition.State = TransitionState.Open Then
             Location = transition.ToLocation
+            MarkMap()
             Return True
         End If
         Return False
     End Function
+    Sub MarkMap()
+        PlayerLocationData.Write(Location.Id)
+    End Sub
 End Class
