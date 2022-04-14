@@ -68,7 +68,7 @@ Public Module ItemTypeExtensions
     Function SpawnDice(itemType As ItemType) As String
         Select Case itemType
             Case ItemType.Potion
-                Return "150D1"
+                Return "50D1"
             Case ItemType.Compass
                 Return "1d1"
             Case ItemType.Macguffin
