@@ -2,6 +2,3 @@
 name = "play"
 path = "LarrikinOfSPLORR.exe"
 console = true
-
-[[prereqs]]
-name = "net-runtime-5-x64"
