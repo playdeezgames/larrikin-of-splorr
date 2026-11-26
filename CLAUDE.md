@@ -23,7 +23,7 @@ tools/ship.sh [--push]      # test, size build, zip; pushes to itch ONLY with --
 
 Packages are imported with `-collection:los=odin`. The scripts pass `-vet-shadowing -vet-unused`.
 
-**Never `git push`, run `tools/ship.sh --push`, `shippit.sh --push` or `butler push` unless the user explicitly says so**; "push" always means `git push`, "ship" always means itch.io. Ships go through Coxswain (`ship_today` first; one a day). The GitHub repo was archived in 2022; unarchiving it (needed before a push) is the user's call.
+**Never `git push`, run `tools/ship.sh --push`, `shippit.sh --push` or `butler push` unless the user explicitly says so**; "push" always means `git push`, "ship" always means itch.io. Ships go through Coxswain (`ship_today` first; one a day). The GitHub repo was archived from 2022 until November 26, 2026, when it was unarchived and Pages enabled (`main`, `/docs`): https://playdeezgames.github.io/larrikin-of-splorr/
 
 ## Architecture of the Odin port
 
