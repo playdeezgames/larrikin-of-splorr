@@ -1,0 +1,276 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
+<title>Larrikin of SPLORR!!</title>
+<style>
+	:root { color-scheme: dark; }
+	html, body { margin: 0; height: 100%; background: #000; color: #777; overflow: hidden; font: 11px/1.4 sans-serif; }
+	body { display: flex; flex-direction: column; align-items: center; justify-content: center; }
+	#stage { flex: 1 1 auto; min-height: 0; width: 100%; display: flex; align-items: center; justify-content: center; }
+	canvas { image-rendering: pixelated; image-rendering: crisp-edges; background: #000; max-width: 100%; max-height: 100%; touch-action: none; }
+	#pad { display: none; flex: 0 0 auto; width: 100%; box-sizing: border-box; padding: 8px 16px calc(8px + env(safe-area-inset-bottom)); justify-content: space-between; align-items: center; user-select: none; -webkit-user-select: none; touch-action: none; }
+	#pad.on { display: flex; }
+	.dpad { display: grid; grid-template-columns: repeat(3, 48px); grid-template-rows: repeat(3, 48px); gap: 4px; }
+	.btn { background: #222; color: #ddd; border: 2px solid #555; border-radius: 12px; font: bold 20px/1 monospace; display: flex; align-items: center; justify-content: center; touch-action: none; }
+	.btn.down { background: #2a4bd7; border-color: #9dafff; }
+	.keys { display: grid; grid-template-columns: repeat(3, 48px); grid-template-rows: repeat(3, 48px); gap: 4px; }
+	.keys .btn { font-size: 16px; }
+	.keys .ok { grid-column: span 3; }
+	footer { flex: 0 0 auto; margin: 4px 16px 6px; text-align: center; max-width: 90vw; }
+	footer a { color: #aaa; }
+	#log { position: fixed; left: 0; bottom: 0; color: #888; font: 10px monospace; white-space: pre; pointer-events: none; }
+</style>
+</head>
+<body>
+<div id="stage"><canvas id="screen" width="448" height="240" tabindex="0"></canvas></div>
+<div id="pad">
+	<div class="dpad">
+		<span></span><div class="btn" data-cmd="0">&#9650;</div><span></span>
+		<div class="btn" data-cmd="3">&#9664;</div><span></span><div class="btn" data-cmd="1">&#9654;</div>
+		<span></span><div class="btn" data-cmd="2">&#9660;</div><span></span>
+	</div>
+	<div class="keys">
+		<div class="btn" data-cmd="6">G</div><div class="btn" data-cmd="7">I</div><div class="btn" data-cmd="10">M</div>
+		<div class="btn" data-cmd="8">F</div><div class="btn" data-cmd="9">R</div><div class="btn" data-cmd="5">Esc</div>
+		<div class="btn ok" data-cmd="4">Ok</div>
+	</div>
+</div>
+<footer id="footer">
+	Larrikin of SPLORR!! by TheGrumpyGameDev (VB.NET terminal game, Dungeon Crawler Jam 2022). Rebuilt in Odin and WebAssembly in November 2026 by an AI agent (Claude Code) at the author's direction.
+	Arrows turn and step and move through menus; Enter or Space chooses; Escape opens the menu or backs out; G ground, I inventory, M map, F fight, R run.
+	Graphics adapted from the Urizen OneBit tilesets by vurmux (https://vurmux.itch.io/urizen-onebit-tilesets); grim reaper adapted from game-icons.net (Lorc, CC BY 3.0). Font: DINOBYTE by mby (https://mby.itch.io/dinobyte), CC BY 4.0.<span class="ll-only" hidden> Feedback by LootLocker.</span>
+	<br><span class="ll-only" hidden><a href="#" id="feedback-link">Send feedback</a> &middot; </span><a href="https://thegrumpygamedev.itch.io/">itch.io</a> &middot; <a href="https://playdeezgames.github.io/oeuvre-of-splorr/">more games</a>
+</footer>
+<pre id="log"></pre>
+<script src="odin.js"></script>
+<script src="lootlocker.js"></script>
+<script>
+// Feedback (the shared SPLORR!! LootLocker shim's form, splorr/Tech/LootLocker.md in the vault). The link
+// stays hidden while LL_KEY is empty: this game has no LootLocker game yet (creating one is the author's call).
+const LL_DOMAIN = "";
+const LL_KEY = "";
+const feedback = LL_KEY ? LootLocker({
+	domain: LL_DOMAIN,
+	key: LL_KEY,
+	version: "1.1.0",
+	idKey: "los:ll-player",
+}).feedbackDialog({ game: "Larrikin of SPLORR!!" }) : null;
+if (feedback) {
+	document.querySelectorAll(".ll-only").forEach((el) => { el.hidden = false; });
+	document.getElementById("feedback-link").addEventListener("click", (e) => { e.preventDefault(); feedback.open(); });
+}
+</script>
+<script>
+(function () {
+	"use strict";
+	// The original's Console.Beep tunes (Sfx/SfxHandler.vb), by index of `Sfx` in odin/game/world.odin (0 is none).
+	const TUNES = [null,
+		"L500;C4;E4;G4;C5;G4;E4;C4",                          // Title
+		"L500;B4",                                            // PlayerHit
+		"L500;B2",                                            // PlayerMiss
+		"L500;G4",                                            // EnemyHit
+		"L500;G2",                                            // EnemyMiss
+		"L500;F#2",                                           // BumpWall
+		"L250;D4;F#4;A4;L500;D5;L250;A4;L1000;D5",            // HealthUp
+		"L500;C4;L250;G3;G3;L500;G#3;G3;R500;B3;C4",          // Death
+		"L500;F#4",                                           // RunAway
+		"L250;C4;C4;C4;L500;G4",                              // KillEnemy
+		"L250;A4;A4;A4;A4;L500;F#4;L250;A4;B4;A4;G#4;L500;A4;F#4", // Win
+	];
+	const canvas = document.getElementById("screen");
+	const ctx = canvas.getContext("2d");
+	const logEl = document.getElementById("log");
+	const mem = new odin.WasmMemoryInterface();
+	const enc = new TextEncoder();
+	const dec = new TextDecoder();
+
+	// ---- storage (every itch.io game shares one origin, so the game prefixes its own keys with "los:") ----
+	function key(ptr, len) { return dec.decode(new Uint8Array(mem.memory.buffer, ptr, len)); }
+	const pending = new Map(); // key -> bytes, handed to the game by storage_read right after storage_len
+	function lsGet(k) { try { return window.localStorage.getItem(k); } catch (e) { return memoryStore.get(k) ?? null; } }
+	function lsSet(k, v) { try { window.localStorage.setItem(k, v); } catch (e) { memoryStore.set(k, v); } }
+	const memoryStore = new Map();
+
+	const imports = {
+		env: {
+			storage_len(kp, kl) {
+				const k = key(kp, kl);
+				const v = lsGet(k);
+				if (v === null) { pending.delete(k); return -1; }
+				const bytes = enc.encode(v);
+				pending.set(k, bytes);
+				return bytes.length;
+			},
+			storage_read(kp, kl, buf, cap) {
+				const bytes = pending.get(key(kp, kl));
+				if (!bytes) { return; }
+				new Uint8Array(mem.memory.buffer, buf, Math.min(cap, bytes.length)).set(bytes.subarray(0, cap));
+			},
+			storage_write(kp, kl, vp, vl) {
+				lsSet(key(kp, kl), dec.decode(new Uint8Array(mem.memory.buffer, vp, vl)));
+			},
+			entropy() { return Math.random(); },
+		},
+	};
+
+	// ---- audio: square-wave beeps, one after another as Console.Beep blocked ----
+	const NOTE = { C: -9, D: -7, E: -5, F: -4, G: -2, A: 0, B: 2 };
+	function freq(note) {
+		const m = /^([A-G])(#?)(\d)$/.exec(note);
+		if (!m) { return 0; }
+		return 440 * Math.pow(2, (NOTE[m[1]] + (m[2] ? 1 : 0) + (Number(m[3]) - 4) * 12) / 12);
+	}
+	let audio = null;
+	let cursor = 0; // when the next note may start (audio clock)
+	const waiting = []; // tunes asked for before a key or tap allowed sound
+	function unlockAudio() {
+		if (audio) { if (audio.state === "suspended") { audio.resume(); } return; }
+		const AC = window.AudioContext || window.webkitAudioContext;
+		if (!AC) { return; }
+		audio = new AC();
+		waiting.splice(0).forEach(playTune);
+	}
+	function playTune(i) {
+		const tune = TUNES[i];
+		if (!tune) { return; }
+		if (!audio) { if (waiting.length < 2) { waiting.push(i); } return; }
+		let t = Math.max(cursor, audio.currentTime + 0.02);
+		// do not let a long queue run far behind what is on screen
+		if (t > audio.currentTime + 4) { return; }
+		let length = 0.2;
+		for (const part of tune.split(";")) {
+			if (part[0] === "L") { length = Number(part.slice(1)) / 1000; continue; }
+			if (part[0] === "R") { t += Number(part.slice(1)) / 1000; continue; }
+			const f = freq(part);
+			if (f > 0) {
+				const osc = audio.createOscillator();
+				const gain = audio.createGain();
+				osc.type = "square";
+				osc.frequency.value = f;
+				gain.gain.setValueAtTime(0.06, t);
+				gain.gain.setValueAtTime(0.06, t + length - 0.01);
+				gain.gain.linearRampToValueAtTime(0, t + length);
+				osc.connect(gain).connect(audio.destination);
+				osc.start(t);
+				osc.stop(t + length);
+			}
+			t += length;
+		}
+		cursor = t;
+	}
+
+	// ---- input ----
+	// The game's Command enum: 0 up, 1 right, 2 down, 3 left, 4 Ok, 5 Back, 6 G, 7 I, 8 F, 9 R, 10 M, 11 Y, 12 N
+	function keyCommand(e) {
+		switch (e.key) {
+			case "ArrowUp": return 0; case "ArrowRight": return 1; case "ArrowDown": return 2; case "ArrowLeft": return 3;
+			case " ": case "Enter": return 4;
+			case "Escape": return 5;
+		}
+		switch (e.code) {
+			case "KeyG": return 6; case "KeyI": return 7; case "KeyF": return 8; case "KeyR": return 9; case "KeyM": return 10;
+			case "KeyY": return 11; case "KeyN": return 12;
+		}
+		switch (e.code) {
+			case "KeyW": case "Numpad8": return 0;
+			case "KeyD": case "Numpad6": return 1;
+			case "KeyS": case "Numpad2": return 2;
+			case "KeyA": case "Numpad4": return 3;
+		}
+		return -1;
+	}
+	let exp = null;
+	function send(cmd, down) {
+		if (!exp) { return; }
+		exp.platform_command(cmd, down ? 1 : 0);
+		if (down && exp.platform_fullscreen_requested()) { toggleFullscreen(); }
+	}
+	function toggleFullscreen() {
+		try {
+			if (document.fullscreenElement) { document.exitFullscreen(); }
+			else { document.documentElement.requestFullscreen(); }
+		} catch (e) { /* embedded frames may refuse */ }
+	}
+	window.addEventListener("keydown", e => {
+		if (feedback && feedback.isOpen) { return; }
+		if (e.ctrlKey || e.altKey || e.metaKey) { return; }
+		const c = keyCommand(e);
+		if (c < 0) { return; }
+		e.preventDefault();
+		unlockAudio();
+		if (!e.repeat) { send(c, true); }
+	});
+	window.addEventListener("keyup", e => {
+		const c = keyCommand(e);
+		if (c < 0) { return; }
+		e.preventDefault();
+		send(c, false);
+	});
+	window.addEventListener("blur", () => { for (let c = 0; c < 13; c++) { send(c, false); } });
+
+	// On-screen buttons: shown once a touch happens or when the main pointer is coarse.
+	const pad = document.getElementById("pad");
+	if (window.matchMedia("(pointer: coarse)").matches) { pad.classList.add("on"); }
+	window.addEventListener("touchstart", () => pad.classList.add("on"), { once: true, passive: true });
+	const held = new Map(); // pointerId -> button element
+	pad.querySelectorAll(".btn").forEach(btn => {
+		btn.addEventListener("pointerdown", e => {
+			e.preventDefault();
+			unlockAudio();
+			try { btn.setPointerCapture(e.pointerId); } catch (err) { /* synthetic events */ }
+			held.set(e.pointerId, btn);
+			btn.classList.add("down");
+			send(Number(btn.dataset.cmd), true);
+		});
+		const release = e => {
+			if (!held.has(e.pointerId)) { return; }
+			held.delete(e.pointerId);
+			btn.classList.remove("down");
+			send(Number(btn.dataset.cmd), false);
+		};
+		btn.addEventListener("pointerup", release);
+		btn.addEventListener("pointercancel", release);
+	});
+	// A tap on the picture is Ok, so a phone without the pad can still advance the splash and messages.
+	canvas.addEventListener("pointerdown", e => { unlockAudio(); canvas.focus(); if (e.pointerType === "touch") { send(4, true); send(4, false); } });
+
+	// ---- drawing ----
+	const image = new ImageData(448, 240);
+	function fit() {
+		const stage = document.getElementById("stage");
+		const w = stage.clientWidth, h = stage.clientHeight;
+		let scale = Math.min(w / 448, h / 240);
+		// Pixel art is crispest at whole-number scales; snap when within 3 percent above one.
+		const whole = Math.floor(scale);
+		if (whole >= 1 && scale < whole * 1.03) { scale = whole; }
+		canvas.style.width = Math.floor(448 * scale) + "px";
+		canvas.style.height = Math.floor(240 * scale) + "px";
+	}
+	window.addEventListener("resize", fit);
+	function frame() {
+		if (exp) {
+			const ptr = exp.platform_frame_ptr();
+			image.data.set(new Uint8ClampedArray(mem.memory.buffer, ptr, 448 * 240 * 4));
+			ctx.putImageData(image, 0, 0);
+			const n = exp.platform_sfx_count();
+			if (n > 0) {
+				for (let i = 0; i < n; i++) { playTune(exp.platform_sfx_at(i)); }
+				exp.platform_sfx_clear();
+			}
+		}
+		requestAnimationFrame(frame);
+	}
+
+	odin.runWasm("game.wasm", null, imports, mem).then(() => {
+		exp = mem.exports;
+		fit();
+		requestAnimationFrame(frame);
+		canvas.focus();
+	}).catch(err => { logEl.textContent = "failed to start: " + err; });
+	fit();
+})();
+</script>
+</body>
+</html>
